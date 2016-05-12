@@ -2,11 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="info.izumin.android.sunazuri">
 
-    <application android:allowBackup="true"
-                 android:label="@string/app_name"
-                 android:icon="@mipmap/ic_launcher"
-                 android:supportsRtl="true"
-                 android:theme="@style/AppTheme">
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+            android:name=".Sunazuri"
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
 
         <activity android:name=".presentation.activity.MainActivity">
             <intent-filter>
