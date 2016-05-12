@@ -1,6 +1,7 @@
 package info.izumin.android.sunazuri;
 
 import dagger.Component;
+import info.izumin.android.sunazuri.data.DataComponent;
 import info.izumin.android.sunazuri.presentation.activity.MainActivity;
 
 /**
@@ -8,6 +9,9 @@ import info.izumin.android.sunazuri.presentation.activity.MainActivity;
  */
 @AppScope
 @Component(
+        dependencies = {
+                DataComponent.class
+        },
         modules = {
                 AppModule.class
         }
