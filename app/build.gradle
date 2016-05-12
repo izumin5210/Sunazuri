@@ -1,8 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.hugo'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
+
+    dataBinding {
+        enabled = true
+    }
 
     defaultConfig {
         applicationId "info.izumin.android.sunazuri"
@@ -10,17 +17,69 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "ESA_API_ENDPOINT", esa_api_endpoint
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:support-v4:${support_lib_version}"
+    compile "com.android.support:appcompat-v7:${support_lib_version}"
+    compile "com.android.support:preference-v7:${support_lib_version}"
+    compile "com.android.support:recyclerview-v7:${support_lib_version}"
+    compile "com.android.support:support-vector-drawable:${support_lib_version}"
+    compile "com.android.support:customtabs:${support_lib_version}"
+    compile "com.android.support:design:${support_lib_version}"
+    compile "com.android.support:percent:${support_lib_version}"
+
+    compile 'io.reactivex:rxjava:1.1.5'
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'com.eccyan:rxjava-optional:1.1.0'
+
+    compile 'com.google.dagger:dagger:2.4'
+    apt 'com.google.dagger:dagger-compiler:2.4'
+    provided 'javax.annotation:jsr250-api:1.0'
+
+    compile 'info.izumin.android:droidux:0.6.0'
+    apt 'info.izumin.android:droidux-processor:0.6.0'
+
+    compile 'com.github.gfx.android.orma:orma:2.4.5'
+    apt 'com.github.gfx.android.orma:orma-processor:2.4.5'
+
+    compile "com.google.code.gson:gson:2.6.2"
+    compile 'com.github.gfx.static_gson:static-gson:0.9.7'
+    apt 'com.github.gfx.static_gson:static-gson-processor:0.9.7'
+
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+
+    compile 'com.jakewharton.timber:timber:4.1.2'
+
+    compile 'com.github.magiepooh:recycler-itemdecoration:1.1.1@aar'
+
+
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
 }
