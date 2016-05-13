@@ -5,6 +5,8 @@ apply plugin: 'me.tatarka.retrolambda'
 
 def esaParams = [
         apiEndpoint:    esa_api_endpoint,
+        oauthScope:     esa_oauth_grant_type,
+        oauthGrantType: esa_oauth_grant_type,
         clientId:       System.getenv("ESA_CLIENT_ID") ?: esa_client_id,
         clientSecret:   System.getenv("ESA_CLIENT_SECRET") ?: esa_client_secret,
         callbackScheme: System.getenv("ESA_CALLBACK_SCHEME") ?: esa_callback_scheme,
@@ -26,10 +28,12 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "ESA_API_ENDPOINT",  "\"${esaParams.apiEndpoint}\""
-        buildConfigField "String", "ESA_CLIENT_ID",     "\"${esaParams.clientId}\""
-        buildConfigField "String", "ESA_CLIENT_SECRET", "\"${esaParams.clientSecret}\""
-        buildConfigField "String", "ESA_CALLBAC_URI",   "\"${esaParams.callbackScheme}://${esaParams.callbackHost}\""
+        buildConfigField "String", "ESA_API_ENDPOINT",      "\"${esaParams.apiEndpoint}\""
+        buildConfigField "String", "ESA_OAUTH_SCOPE",       "\"${esaParams.oauthGrantType}\""
+        buildConfigField "String", "ESA_OAUTH_GRANT_TYPE",  "\"${esaParams.oauthGrantType}\""
+        buildConfigField "String", "ESA_CLIENT_ID",         "\"${esaParams.clientId}\""
+        buildConfigField "String", "ESA_CLIENT_SECRET",     "\"${esaParams.clientSecret}\""
+        buildConfigField "String", "ESA_CALLBACK_URI",      "\"${esaParams.callbackScheme}://${esaParams.callbackHost}\""
 
         manifestPlaceholders = [
                 esaCallbackScheme: esaParams.callbackScheme,
