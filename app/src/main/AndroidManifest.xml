@@ -21,6 +21,9 @@
         <activity android:name=".presentation.activity.oauth.OAuthActivity"
                   android:launchMode="singleTask">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:host="${esaCallbackHost}" android:scheme="${esaCallbackScheme}"/>
             </intent-filter>
         </activity>
