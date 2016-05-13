@@ -19,6 +19,8 @@ android {
         versionName "1.0"
 
         buildConfigField "String", "ESA_API_ENDPOINT", esa_api_endpoint
+        buildConfigField "String", "ESA_CLIENT_ID", System.getenv("ESA_CLIENT_ID") ?: esa_client_id
+        buildConfigField "String", "ESA_CLIENT_SECRET", System.getenv("ESA_CLIENT_SECRET") ?: esa_client_secret
     }
 
     buildTypes {
