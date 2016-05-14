@@ -1,6 +1,7 @@
 package info.izumin.android.sunazuri.infrastructure;
 
 import dagger.Component;
+import info.izumin.android.sunazuri.domain.repository.OauthRepository;
 import info.izumin.android.sunazuri.domain.repository.TeamsRepository;
 import info.izumin.android.sunazuri.infrastructure.api.ApiModule;
 import info.izumin.android.sunazuri.infrastructure.repository.RepositoryModule;
@@ -20,4 +21,5 @@ import javax.inject.Singleton;
 )
 public interface InfrastructureComponent {
     TeamsRepository teamsRepository();
+    OauthRepository oauthRepository();
 }
