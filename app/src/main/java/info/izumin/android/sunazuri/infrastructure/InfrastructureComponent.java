@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 @Singleton
 @Component(
         modules = {
+                InfrastructureModule.class,
                 RepositoryModule.class,
                 ApiModule.class
         }
