@@ -2,6 +2,7 @@ package info.izumin.android.sunazuri.infrastructure.repository;
 
 import dagger.Module;
 import dagger.Provides;
+import info.izumin.android.sunazuri.domain.repository.OauthRepository;
 import info.izumin.android.sunazuri.domain.repository.TeamsRepository;
 
 import javax.inject.Singleton;
@@ -16,6 +17,12 @@ public class RepositoryModule {
     @Provides
     @Singleton
     TeamsRepository teamsRepository(TeamsRepositoryImpl repo) {
+        return repo;
+    }
+
+    @Provides
+    @Singleton
+    OauthRepository oauthRepository(OauthRepositoryImpl repo) {
         return repo;
     }
 }
