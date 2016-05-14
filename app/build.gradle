@@ -5,7 +5,7 @@ apply plugin: 'me.tatarka.retrolambda'
 
 def esaParams = [
         apiEndpoint:    esa_api_endpoint,
-        oauthScope:     esa_oauth_grant_type,
+        oauthScope:     esa_oauth_scope,
         oauthGrantType: esa_oauth_grant_type,
         clientId:       System.getenv("ESA_CLIENT_ID") ?: esa_client_id,
         clientSecret:   System.getenv("ESA_CLIENT_SECRET") ?: esa_client_secret,
@@ -29,7 +29,7 @@ android {
         versionName "1.0"
 
         buildConfigField "String", "ESA_API_ENDPOINT",      "\"${esaParams.apiEndpoint}\""
-        buildConfigField "String", "ESA_OAUTH_SCOPE",       "\"${esaParams.oauthGrantType}\""
+        buildConfigField "String", "ESA_OAUTH_SCOPE",       "\"${esaParams.oauthScope}\""
         buildConfigField "String", "ESA_OAUTH_GRANT_TYPE",  "\"${esaParams.oauthGrantType}\""
         buildConfigField "String", "ESA_CLIENT_ID",         "\"${esaParams.clientId}\""
         buildConfigField "String", "ESA_CLIENT_SECRET",     "\"${esaParams.clientSecret}\""
@@ -39,6 +39,8 @@ android {
                 esaCallbackScheme: esaParams.callbackScheme,
                 esaCallbackHost: esaParams.callbackHost
         ]
+
+        buildConfigField "String", "KEYSTORE_ALIAS", "\"${keystore_alias}\""
     }
 
     buildTypes {
