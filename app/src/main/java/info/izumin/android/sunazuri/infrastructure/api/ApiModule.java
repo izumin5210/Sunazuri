@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dagger.Module;
 import dagger.Provides;
+import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -21,9 +22,11 @@ public class ApiModule {
     public static final String TAG = ApiModule.class.getSimpleName();
 
     private final String apiEndpoint;
+    private final OauthParams oauthParams;
 
-    public ApiModule(String apiEndpoint) {
+    public ApiModule(String apiEndpoint, OauthParams oauthParams) {
         this.apiEndpoint = apiEndpoint;
+        this.oauthParams = oauthParams;
     }
 
     @Provides
@@ -63,7 +66,19 @@ public class ApiModule {
 
     @Provides
     @Singleton
+    OauthApi oauthApi(Retrofit retrofit) {
+        return retrofit.create(OauthApi.class);
+    }
+
+    @Provides
+    @Singleton
     TeamsApi teamsApi(Retrofit retrofit) {
         return retrofit.create(TeamsApi.class);
+    }
+
+    @Provides
+    @Singleton
+    OauthParams oauthParams() {
+        return oauthParams;
     }
 }

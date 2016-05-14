@@ -4,8 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import info.izumin.android.sunazuri.data.DaggerDataComponent;
 import info.izumin.android.sunazuri.data.DataComponent;
+import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
 import info.izumin.android.sunazuri.infrastructure.DaggerInfrastructureComponent;
 import info.izumin.android.sunazuri.infrastructure.InfrastructureComponent;
+import info.izumin.android.sunazuri.infrastructure.InfrastructureModule;
 import info.izumin.android.sunazuri.infrastructure.api.ApiModule;
 
 /**
@@ -44,7 +46,21 @@ public class Sunazuri extends Application {
 
     private InfrastructureComponent getInfrastructureComponent() {
         return DaggerInfrastructureComponent.builder()
-                .apiModule(new ApiModule(BuildConfig.ESA_API_ENDPOINT))
+                .infrastructureModule(new InfrastructureModule(this, BuildConfig.KEYSTORE_ALIAS))
+                .apiModule(new ApiModule(BuildConfig.ESA_API_ENDPOINT, getOauthParams()))
                 .build();
+    }
+
+    private OauthParams getOauthParams() {
+        return new OauthParams(
+                BuildConfig.ESA_API_ENDPOINT,
+                BuildConfig.ESA_CLIENT_ID,
+                BuildConfig.ESA_CLIENT_SECRET,
+                BuildConfig.ESA_CALLBACK_URI,
+                BuildConfig.ESA_OAUTH_SCOPE,
+                "code",
+                "/oauth/authorize",
+                BuildConfig.ESA_OAUTH_GRANT_TYPE
+        );
     }
 }

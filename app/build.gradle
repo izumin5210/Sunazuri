@@ -3,6 +3,16 @@ apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
+def esaParams = [
+        apiEndpoint:    esa_api_endpoint,
+        oauthScope:     esa_oauth_scope,
+        oauthGrantType: esa_oauth_grant_type,
+        clientId:       System.getenv("ESA_CLIENT_ID") ?: esa_client_id,
+        clientSecret:   System.getenv("ESA_CLIENT_SECRET") ?: esa_client_secret,
+        callbackScheme: System.getenv("ESA_CALLBACK_SCHEME") ?: esa_callback_scheme,
+        callbackHost:   System.getenv("ESA_CALLBACK_HOST") ?: esa_callback_host
+]
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -18,7 +28,19 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "ESA_API_ENDPOINT", esa_api_endpoint
+        buildConfigField "String", "ESA_API_ENDPOINT",      "\"${esaParams.apiEndpoint}\""
+        buildConfigField "String", "ESA_OAUTH_SCOPE",       "\"${esaParams.oauthScope}\""
+        buildConfigField "String", "ESA_OAUTH_GRANT_TYPE",  "\"${esaParams.oauthGrantType}\""
+        buildConfigField "String", "ESA_CLIENT_ID",         "\"${esaParams.clientId}\""
+        buildConfigField "String", "ESA_CLIENT_SECRET",     "\"${esaParams.clientSecret}\""
+        buildConfigField "String", "ESA_CALLBACK_URI",      "\"${esaParams.callbackScheme}://${esaParams.callbackHost}\""
+
+        manifestPlaceholders = [
+                esaCallbackScheme: esaParams.callbackScheme,
+                esaCallbackHost: esaParams.callbackHost
+        ]
+
+        buildConfigField "String", "KEYSTORE_ALIAS", "\"${keystore_alias}\""
     }
 
     buildTypes {
@@ -75,6 +97,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+
+    compile 'com.facebook.conceal:conceal:1.1.2@aar'
 
     compile 'com.jakewharton.timber:timber:4.1.2'
 
