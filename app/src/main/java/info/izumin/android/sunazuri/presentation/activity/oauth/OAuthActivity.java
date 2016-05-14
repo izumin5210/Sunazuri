@@ -14,7 +14,7 @@ import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
 
-public class OAuthActivity extends AppCompatActivity {
+public class OauthActivity extends AppCompatActivity {
 
     @Inject RootStore store;
     @Inject OauthParams oauthParams;

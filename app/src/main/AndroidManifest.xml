@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.activity.oauth.OAuthActivity"
+        <activity android:name=".presentation.activity.oauth.OauthActivity"
                   android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
