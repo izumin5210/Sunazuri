@@ -1,6 +1,5 @@
 package info.izumin.android.sunazuri.infrastructure.dao;
 
-import hugo.weaving.DebugLog;
 import info.izumin.android.sunazuri.domain.entity.AccessToken;
 import info.izumin.android.sunazuri.domain.entity.AccessToken_Relation;
 import info.izumin.android.sunazuri.domain.entity.OrmaDatabase;
@@ -30,7 +29,6 @@ public class AccessTokenDao {
         return accessTokenRelation().selector().executeAsObservable().toList();
     }
 
-    @DebugLog
     public Single<AccessToken> insert(AccessToken token) {
         return accessTokenRelation().inserter()
                 .executeAsObservable(token)
