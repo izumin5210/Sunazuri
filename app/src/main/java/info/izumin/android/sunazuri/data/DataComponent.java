@@ -2,6 +2,7 @@ package info.izumin.android.sunazuri.data;
 
 import dagger.Component;
 import info.izumin.android.sunazuri.data.usecase.UseCaseModule;
+import info.izumin.android.sunazuri.domain.RootStore;
 import info.izumin.android.sunazuri.domain.usecase.FetchTeamsUseCase;
 import info.izumin.android.sunazuri.infrastructure.InfrastructureComponent;
 
@@ -14,6 +15,7 @@ import info.izumin.android.sunazuri.infrastructure.InfrastructureComponent;
                 InfrastructureComponent.class
         },
         modules = {
+                DataModule.class,
                 UseCaseModule.class
         }
 )
