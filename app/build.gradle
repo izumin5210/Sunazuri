@@ -96,6 +96,8 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
 
+    compile 'com.facebook.conceal:conceal:1.1.2@aar'
+
     compile 'com.jakewharton.timber:timber:4.1.2'
 
     compile 'com.github.magiepooh:recycler-itemdecoration:1.1.1@aar'
