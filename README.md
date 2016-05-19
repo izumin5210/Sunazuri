@@ -1,5 +1,8 @@
 # Sunazuri
+[![wercker status](https://app.wercker.com/status/91911c982144b4e89dd09c390e83a647/s/master "wercker status")](https://app.wercker.com/project/bykey/91911c982144b4e89dd09c390e83a647)
+
 Sunazuri is an [esa.io][esa] client application for Android (unofficial)
+
 
 ## Architecture
 Sunazuri adopted multi-layered architecture inspired by [The Clean Architecture][clean].
