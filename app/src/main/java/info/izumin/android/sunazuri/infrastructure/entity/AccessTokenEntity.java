@@ -1,4 +1,4 @@
-package info.izumin.android.sunazuri.domain.entity;
+package info.izumin.android.sunazuri.infrastructure.entity;
 
 import com.github.gfx.android.orma.annotation.Column;
 import com.github.gfx.android.orma.annotation.Table;
@@ -10,8 +10,8 @@ import com.google.gson.FieldNamingPolicy;
  */
 @Table
 @JsonSerializable(fieldNamingPolicy = FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-public class AccessToken {
-    public static final String TAG = AccessToken.class.getSimpleName();
+public class AccessTokenEntity {
+    public static final String TAG = AccessTokenEntity.class.getSimpleName();
 
     @Column
     public String accessToken;

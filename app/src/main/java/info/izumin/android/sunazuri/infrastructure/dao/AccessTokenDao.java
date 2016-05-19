@@ -1,8 +1,8 @@
 package info.izumin.android.sunazuri.infrastructure.dao;
 
-import info.izumin.android.sunazuri.domain.entity.AccessToken;
-import info.izumin.android.sunazuri.domain.entity.AccessToken_Relation;
-import info.izumin.android.sunazuri.domain.entity.OrmaDatabase;
+import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity;
+import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity_Relation;
+import info.izumin.android.sunazuri.infrastructure.entity.OrmaDatabase;
 import rx.Completable;
 import rx.Observable;
 import rx.Single;
@@ -25,11 +25,11 @@ public class AccessTokenDao {
         this.orma = orma;
     }
 
-    public Observable<List<AccessToken>> findAll() {
+    public Observable<List<AccessTokenEntity>> findAll() {
         return accessTokenRelation().selector().executeAsObservable().toList();
     }
 
-    public Single<AccessToken> insert(AccessToken token) {
+    public Single<AccessTokenEntity> insert(AccessTokenEntity token) {
         return accessTokenRelation().inserter()
                 .executeAsObservable(token)
                 .map(_l -> token);
@@ -39,7 +39,7 @@ public class AccessTokenDao {
         return accessTokenRelation().deleter().executeAsObservable().toCompletable();
     }
 
-    private AccessToken_Relation accessTokenRelation() {
-        return orma.relationOfAccessToken();
+    private AccessTokenEntity_Relation accessTokenRelation() {
+        return orma.relationOfAccessTokenEntity();
     }
 }

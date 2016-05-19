@@ -1,4 +1,4 @@
-package info.izumin.android.sunazuri.domain.entity;
+package info.izumin.android.sunazuri.infrastructure.entity;
 
 import com.github.gfx.android.orma.annotation.Column;
 import com.github.gfx.android.orma.annotation.PrimaryKey;
@@ -11,8 +11,8 @@ import com.google.gson.FieldNamingPolicy;
  */
 @Table
 @JsonSerializable(fieldNamingPolicy = FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-public class TeamStats {
-    public static final String TAG = TeamStats.class.getSimpleName();
+public class TeamStatsEntity {
+    public static final String TAG = TeamStatsEntity.class.getSimpleName();
 
     @PrimaryKey(auto = true, autoincrement = true)
     public long id;

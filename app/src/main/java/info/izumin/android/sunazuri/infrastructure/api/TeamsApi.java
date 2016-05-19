@@ -1,6 +1,6 @@
 package info.izumin.android.sunazuri.infrastructure.api;
 
-import info.izumin.android.sunazuri.domain.entity.Team;
+import info.izumin.android.sunazuri.infrastructure.entity.TeamEntity;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -12,15 +12,15 @@ import java.util.List;
  */
 public interface TeamsApi {
     @GET("/v1/teams")
-    Observable<List<Team>> fetch();
+    Observable<List<TeamEntity>> fetch();
 
     @GET("/v1/teams/{teamName}")
-    Observable<Team> fetch(
+    Observable<TeamEntity> fetch(
             @Path("teamName") String teamName
     );
 
     @GET("v1/teams/{teamName}/stats")
-    Observable<Team> stats(
+    Observable<TeamEntity> stats(
             @Path("teamName") String teamName
     );
 }

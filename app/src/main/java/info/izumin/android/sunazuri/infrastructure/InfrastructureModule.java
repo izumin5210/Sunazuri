@@ -8,7 +8,7 @@ import com.facebook.crypto.CryptoConfig;
 import com.facebook.crypto.keychain.KeyChain;
 import dagger.Module;
 import dagger.Provides;
-import info.izumin.android.sunazuri.domain.entity.OrmaDatabase;
+import info.izumin.android.sunazuri.infrastructure.entity.OrmaDatabase;
 import info.izumin.android.sunazuri.infrastructure.qualifier.KeyStoreAlias;
 
 import javax.inject.Singleton;

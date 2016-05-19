@@ -3,7 +3,7 @@ package info.izumin.android.sunazuri.infrastructure.repository.source.oauth;
 import com.facebook.crypto.Crypto;
 import com.facebook.crypto.exception.CryptoInitializationException;
 import com.facebook.crypto.exception.KeyChainException;
-import info.izumin.android.sunazuri.domain.entity.AccessToken;
+import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity;
 import info.izumin.android.sunazuri.infrastructure.api.OauthApi;
 import info.izumin.android.sunazuri.infrastructure.dao.AccessTokenDao;
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
@@ -39,7 +39,7 @@ class OauthRemoteDataSource implements OauthDataSource {
     }
 
     @Override
-    public Single<AccessToken> getToken(String code) {
+    public Single<AccessTokenEntity> getToken(String code) {
         return oauthApi.fetchToken(
                 oauthParams.clientId,
                 oauthParams.clientSecret,
