@@ -71,6 +71,10 @@ android {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
+    lintOptions {
+        warning 'InvalidPackage'
+    }
+
     testOptions {
         unitTests.returnDefaultValues = true
     }
