@@ -70,6 +70,10 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 configurations.all {
