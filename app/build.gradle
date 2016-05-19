@@ -3,6 +3,8 @@ apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
+apply plugin: 'kotlin-android'
+
 def esaParams = [
         apiEndpoint:    esa_api_endpoint,
         oauthScope:     esa_oauth_scope,
@@ -55,6 +57,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -63,6 +70,12 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  }
 }
 
 dependencies {
@@ -104,6 +117,10 @@ dependencies {
 
     compile 'com.github.magiepooh:recycler-itemdecoration:1.1.1@aar'
 
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
 
     testCompile 'junit:junit:4.12'
+
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
