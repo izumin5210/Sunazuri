@@ -21,4 +21,7 @@ public class AccessTokenEntity {
 
     @Column
     public String scope;
+
+    @Column(indexed = true)
+    public AuthorizedUserEntity user;
 }

@@ -27,6 +27,6 @@ public class TeamEntity {
     @Column
     public String icon;
 
-    @Column
-    public TeamStatsEntity stats;
+    @Column(indexed = true)
+    public AuthorizedUserEntity user;
 }

@@ -6,38 +6,35 @@ import com.github.gfx.android.orma.annotation.Table;
 import com.github.gfx.static_gson.annotation.JsonSerializable;
 import com.google.gson.FieldNamingPolicy;
 
+import java.util.Date;
+
 /**
- * Created by izumin on 5/13/2016 AD.
+ * Created by izumin on 5/20/2016 AD.
  */
 @Table
 @JsonSerializable(fieldNamingPolicy = FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-public class TeamStatsEntity {
-    public static final String TAG = TeamStatsEntity.class.getSimpleName();
+public class AuthorizedUserEntity {
+    public static final String TAG = AuthorizedUserEntity.class.getSimpleName();
 
-    @PrimaryKey(auto = true, autoincrement = true)
+    @PrimaryKey(auto = false)
+    @Column
     public long id;
 
     @Column
-    public int members;
-
-    @Column
-    public int posts;
-
-    @Column
-    public int comments;
-
-    @Column
-    public int stars;
-
-    @Column
-    public int dailyActiveUsers;
-
-    @Column
-    public int weeklyActiveUsers;
-
-    @Column
-    public int monthlyActiveUsers;
+    public String name;
 
     @Column(indexed = true)
-    public TeamEntity team;
+    public String screenName;
+
+    @Column
+    public Date createdAt;
+
+    @Column
+    public Date updatedAt;
+
+    @Column
+    public String icon;
+
+    @Column
+    public String email;
 }
