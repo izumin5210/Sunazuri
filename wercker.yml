@@ -1,0 +1,19 @@
+box: izumin5210/android:build-tools-23.0.3_target-api-23
+
+build:
+  steps:
+    - script:
+        name: run gradle check
+        code: |
+          ./gradlew --quiet --stacktrace --project-cache-dir=$WERCKER_CACHE_DIR -PdisablePreDex clean check
+  after-steps:
+    - script:
+        name: inspect build result
+        code: |
+          pwd
+          for dir in {app}; do
+            mkdir -p ${WERCKER_REPORT_ARTIFACTS_DIR}/$dir
+            ls -la ${WERCKER_SOURCE_DIR}/$dir
+            cp -r ${WERCKER_SOURCE_DIR}/$dir/build/reports ${WERCKER_REPORT_ARTIFACTS_DIR}/$dir
+            cp -r ${WERCKER_SOURCE_DIR}/$dir/build/outputs ${WERCKER_REPORT_ARTIFACTS_DIR}/$dir
+          done
