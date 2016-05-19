@@ -11,9 +11,7 @@ build:
         name: inspect build result
         code: |
           pwd
-          for dir in {app}; do
-            mkdir -p ${WERCKER_REPORT_ARTIFACTS_DIR}/$dir
-            ls -la ${WERCKER_SOURCE_DIR}/$dir
-            cp -r ${WERCKER_SOURCE_DIR}/$dir/build/reports ${WERCKER_REPORT_ARTIFACTS_DIR}/$dir
-            cp -r ${WERCKER_SOURCE_DIR}/$dir/build/outputs ${WERCKER_REPORT_ARTIFACTS_DIR}/$dir
-          done
+          mkdir -p ${WERCKER_REPORT_ARTIFACTS_DIR}/app
+          ls -la ${WERCKER_SOURCE_DIR}/app
+          cp -r ${WERCKER_SOURCE_DIR}/app/build/reports ${WERCKER_REPORT_ARTIFACTS_DIR}/app
+          cp -r ${WERCKER_SOURCE_DIR}/app/build/outputs ${WERCKER_REPORT_ARTIFACTS_DIR}/app
