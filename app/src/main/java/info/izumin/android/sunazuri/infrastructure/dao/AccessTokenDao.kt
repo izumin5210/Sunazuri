@@ -2,9 +2,7 @@ package info.izumin.android.sunazuri.infrastructure.dao;
 
 import info.izumin.android.sunazuri.domain.entity.AccessToken
 import info.izumin.android.sunazuri.domain.entity.OrmaDatabase
-import rx.Completable
 import rx.Observable
-import rx.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,14 +19,12 @@ class AccessTokenDao @Inject constructor(val orma: OrmaDatabase) {
         return accessTokenRelation().selector().executeAsObservable().toList()
     }
 
-    fun insert(token: AccessToken): Single<AccessToken> {
-        return accessTokenRelation().inserter()
-                .executeAsObservable(token)
-                .map({_l -> token});
+    fun insert(token: AccessToken) {
+        accessTokenRelation().inserter().execute(token)
     }
 
-    fun deleteAll(): Completable {
-        return accessTokenRelation().deleter().executeAsObservable().toCompletable()
+    fun deleteAll() {
+        accessTokenRelation().deleter().execute()
     }
 
     private fun accessTokenRelation() = orma.relationOfAccessToken()

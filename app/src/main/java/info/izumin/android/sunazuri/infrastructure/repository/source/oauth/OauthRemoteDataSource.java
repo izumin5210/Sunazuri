@@ -47,14 +47,13 @@ class OauthRemoteDataSource implements OauthDataSource {
                 oauthParams.redirectUri,
                 code
         )
-                .flatMap(token -> {
+                .map(token -> {
                     final String planToken = token.accessToken;
                     try {
                         token.accessToken = encrypt(crypto, keyStoreAlias, token.accessToken);
-                        return accessTokenDao.insert(token).map(t -> {
-                            t.accessToken = planToken;
-                            return t;
-                        });
+                        accessTokenDao.insert(token);
+                        token.accessToken = planToken;
+                        return token;
                     } catch (IOException | KeyChainException | CryptoInitializationException e) {
                         e.printStackTrace();
                         throw Exceptions.propagate(e);
