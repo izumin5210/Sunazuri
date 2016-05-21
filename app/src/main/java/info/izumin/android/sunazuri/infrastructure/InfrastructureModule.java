@@ -8,7 +8,7 @@ import com.facebook.crypto.CryptoConfig;
 import com.facebook.crypto.keychain.KeyChain;
 import dagger.Module;
 import dagger.Provides;
-import info.izumin.android.sunazuri.domain.entity.OrmaDatabase;
+import info.izumin.android.sunazuri.infrastructure.dao.OrmaProvider;
 import info.izumin.android.sunazuri.infrastructure.qualifier.KeyStoreAlias;
 
 import javax.inject.Singleton;
@@ -43,9 +43,8 @@ public class InfrastructureModule {
 
     @Provides
     @Singleton
-    OrmaDatabase ormaDatabase(Context context) {
-        return OrmaDatabase.builder(context)
-                .build();
+    OrmaProvider ormaProvider(Context context) {
+        return new OrmaProvider(context);
     }
 
     @Provides
