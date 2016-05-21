@@ -1,10 +1,10 @@
 package info.izumin.android.sunazuri.infrastructure.dao
 
-import android.content.Context
 import info.izumin.android.sunazuri.BuildConfig
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
 import info.izumin.android.sunazuri.infrastructure.entity.AuthorizedUserEntity
 import info.izumin.android.sunazuri.infrastructure.entity.OrmaDatabase
+import info.izumin.android.sunazuri.infrastructure.mock.dao.MockOrmaProvider
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,8 +39,6 @@ class AccessTokenDaoTest {
         TOKEN.user          = USER
     }
 
-    class TestOrmaProvider(context: Context, override val db: OrmaDatabase): OrmaProvider(context = context) {
-    }
 
     val context = RuntimeEnvironment.application.applicationContext
 
@@ -51,7 +49,7 @@ class AccessTokenDaoTest {
     @Before
     fun setUp() {
         db = OrmaDatabase.builder(context).name(null).build()
-        orma = TestOrmaProvider(context, db)
+        orma = MockOrmaProvider(context, db)
         dao = AccessTokenDao(orma)
     }
 
