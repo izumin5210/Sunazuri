@@ -16,8 +16,10 @@ class AccessTokenDao @Inject constructor(val orma: OrmaProvider) {
     }
 
     fun upsert(token: AccessTokenEntity) {
-        authorizedUserRelation().idEq(token.user.id).upserter().execute(token.user)
-        accessTokenRelation().userEq(token.user.id).upserter().execute(token)
+        orma.db.transactionSync {
+            authorizedUserRelation().idEq(token.user.id).upserter().execute(token.user)
+            accessTokenRelation().userEq(token.user.id).upserter().execute(token)
+        }
     }
 
     fun insert(user: AuthorizedUserEntity) {
