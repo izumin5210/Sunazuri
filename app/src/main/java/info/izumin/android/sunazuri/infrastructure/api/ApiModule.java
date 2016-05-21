@@ -78,6 +78,12 @@ public class ApiModule {
 
     @Provides
     @Singleton
+    UsersApi usersApi(Retrofit retrofit) {
+        return retrofit.create(UsersApi.class);
+    }
+
+    @Provides
+    @Singleton
     OauthParams oauthParams() {
         return oauthParams;
     }
