@@ -1,6 +1,7 @@
 package info.izumin.android.sunazuri.infrastructure.repository.source.oauth;
 
 import info.izumin.android.sunazuri.infrastructure.api.OauthApi;
+import info.izumin.android.sunazuri.infrastructure.api.UsersApi;
 import info.izumin.android.sunazuri.infrastructure.dao.AccessTokenDao;
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity;
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
@@ -13,15 +14,18 @@ import rx.Single;
 class OauthRemoteDataSource implements OauthDataSource {
     public static final String TAG = OauthRemoteDataSource.class.getSimpleName();
 
+    private final UsersApi usersApi;
     private final OauthApi oauthApi;
     private final OauthParams oauthParams;
     private final AccessTokenDao accessTokenDao;
     private final Encryptor encryptor;
 
-    OauthRemoteDataSource(OauthApi oauthApi,
+    OauthRemoteDataSource(UsersApi usersApi,
+                          OauthApi oauthApi,
                           OauthParams oauthParams,
                           AccessTokenDao accessTokenDao,
                           Encryptor encryptor) {
+        this.usersApi = usersApi;
         this.oauthApi = oauthApi;
         this.oauthParams = oauthParams;
         this.accessTokenDao = accessTokenDao;
@@ -37,6 +41,11 @@ class OauthRemoteDataSource implements OauthDataSource {
                 oauthParams.redirectUri,
                 code
         )
+                .flatMap(token -> usersApi.fetch(token.accessToken)
+                        .map(user -> {
+                            token.user = user;
+                            return token;
+                        }))
                 .map(token -> {
                     final String planToken = token.accessToken;
                     token.accessToken = encryptor.encrypt(token.accessToken);
