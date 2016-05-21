@@ -3,6 +3,7 @@ package info.izumin.android.sunazuri.infrastructure.dao
 import android.content.Context
 import info.izumin.android.sunazuri.BuildConfig
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
+import info.izumin.android.sunazuri.infrastructure.entity.AuthorizedUserEntity
 import info.izumin.android.sunazuri.infrastructure.entity.OrmaDatabase
 import org.junit.Before
 import org.junit.Test
@@ -10,6 +11,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricGradleTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
+import java.util.*
 import kotlin.test.expect
 
 /**
@@ -20,11 +22,21 @@ import kotlin.test.expect
 class AccessTokenDaoTest {
 
     val TOKEN = AccessTokenEntity()
+    val USER = AuthorizedUserEntity()
 
     init {
+        USER.id         = 1
+        USER.name       = "test user"
+        USER.screenName = "test_user"
+        USER.createdAt  = Date()
+        USER.updatedAt  = Date()
+        USER.icon       = "http://example.com/test_user.png"
+        USER.email      = "test@example.com"
+
         TOKEN.accessToken   = "testtoken"
         TOKEN.scope         = "read+write"
         TOKEN.tokenType     = "bearer"
+        TOKEN.user          = USER
     }
 
     class TestOrmaProvider(context: Context, override val db: OrmaDatabase): OrmaProvider(context = context) {
@@ -45,8 +57,23 @@ class AccessTokenDaoTest {
 
     @Test
     fun testInsert() {
-        dao.insert(TOKEN)
+        dao.upsert(TOKEN)
 
+        expect(1, { db.selectFromAuthorizedUserEntity().count() })
         expect(1, { db.selectFromAccessTokenEntity().count() })
+        expect(1, { db.selectFromAccessTokenEntity().userEq(USER.id).count() })
+    }
+
+    @Test
+    fun testUpdate() {
+        dao.upsert(TOKEN)
+        TOKEN.accessToken = "newtesttoken"
+        USER.name = "new test user"
+        dao.upsert(TOKEN)
+
+        expect(1, { db.selectFromAuthorizedUserEntity().count() })
+        expect(1, { db.selectFromAccessTokenEntity().count() })
+        expect("newtesttoken", { db.selectFromAccessTokenEntity().userEq(USER.id).value().accessToken })
+        expect("new test user", { db.selectFromAuthorizedUserEntity().idEq(USER.id).value().name })
     }
 }

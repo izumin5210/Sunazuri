@@ -51,7 +51,7 @@ class OauthRemoteDataSource implements OauthDataSource {
                     final String planToken = token.accessToken;
                     try {
                         token.accessToken = encrypt(crypto, keyStoreAlias, token.accessToken);
-                        accessTokenDao.insert(token);
+                        accessTokenDao.upsert(token);
                         token.accessToken = planToken;
                         return token;
                     } catch (IOException | KeyChainException | CryptoInitializationException e) {
