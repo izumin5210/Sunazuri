@@ -1,5 +1,6 @@
 package info.izumin.android.sunazuri.presentation.activity.oauth;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,11 +11,13 @@ import info.izumin.android.sunazuri.Sunazuri;
 import info.izumin.android.sunazuri.domain.RootStore;
 import info.izumin.android.sunazuri.domain.usecase.FetchTokenUseCase;
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
 
 public class OauthActivity extends AppCompatActivity {
+    public static final String TAG = OauthActivity.class.getSimpleName();
 
     @Inject RootStore store;
     @Inject OauthParams oauthParams;
@@ -38,7 +41,13 @@ public class OauthActivity extends AppCompatActivity {
         inject();
         fetchTokenUseCase.execute(intent.getDataString())
                 .subscribeOn(Schedulers.io())
-                .subscribe();
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::returnToMain);
+    }
+
+    private void returnToMain() {
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 
     private void inject() {
