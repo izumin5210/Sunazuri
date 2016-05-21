@@ -1,5 +1,6 @@
 package info.izumin.android.sunazuri.infrastructure.dao
 
+import android.content.Context
 import info.izumin.android.sunazuri.BuildConfig
 import info.izumin.android.sunazuri.domain.entity.AccessToken
 import info.izumin.android.sunazuri.domain.entity.OrmaDatabase
@@ -26,14 +27,19 @@ class AccessTokenDaoTest {
         TOKEN.tokenType     = "bearer"
     }
 
+    class TestOrmaProvider(context: Context, override val db: OrmaDatabase): OrmaProvider(context = context) {
+    }
+
     val context = RuntimeEnvironment.application.applicationContext
 
-    lateinit var orma: OrmaDatabase
+    lateinit var db: OrmaDatabase
+    lateinit var orma: OrmaProvider
     lateinit var dao: AccessTokenDao
 
     @Before
     fun setUp() {
-        orma = OrmaDatabase.builder(context).name(null).build()
+        db = OrmaDatabase.builder(context).name(null).build()
+        orma = TestOrmaProvider(context, db)
         dao = AccessTokenDao(orma)
     }
 
@@ -41,6 +47,6 @@ class AccessTokenDaoTest {
     fun testInsert() {
         dao.insert(TOKEN)
 
-        expect(1, { orma.selectFromAccessToken().count() })
+        expect(1, { db.selectFromAccessToken().count() })
     }
 }
