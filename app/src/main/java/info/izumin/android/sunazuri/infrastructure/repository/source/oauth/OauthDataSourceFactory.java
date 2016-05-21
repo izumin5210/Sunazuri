@@ -1,10 +1,9 @@
 package info.izumin.android.sunazuri.infrastructure.repository.source.oauth;
 
-import com.facebook.crypto.Crypto;
-import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
 import info.izumin.android.sunazuri.infrastructure.api.OauthApi;
 import info.izumin.android.sunazuri.infrastructure.dao.AccessTokenDao;
-import info.izumin.android.sunazuri.infrastructure.qualifier.KeyStoreAlias;
+import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
+import info.izumin.android.sunazuri.infrastructure.util.Encryptor;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,23 +18,20 @@ public class OauthDataSourceFactory {
     private final OauthApi oauthApi;
     private final OauthParams oauthParams;
     private final AccessTokenDao accessTokenDao;
-    private final Crypto crypto;
-    private final String keyStoreAlias;
+    private final Encryptor encryptor;
 
     @Inject
     OauthDataSourceFactory(OauthApi oauthApi,
                            OauthParams oauthParams,
                            AccessTokenDao accessTokenDao,
-                           Crypto crypto,
-                           @KeyStoreAlias String keyStoreAlias) {
+                           Encryptor encryptor) {
         this.oauthApi = oauthApi;
         this.oauthParams = oauthParams;
         this.accessTokenDao = accessTokenDao;
-        this.crypto = crypto;
-        this.keyStoreAlias = keyStoreAlias;
+        this.encryptor = encryptor;
     }
 
     public OauthDataSource createRemoteDataSource() {
-        return new OauthRemoteDataSource(oauthApi, oauthParams, accessTokenDao, crypto, keyStoreAlias);
+        return new OauthRemoteDataSource(oauthApi, oauthParams, accessTokenDao, encryptor);
     }
 }

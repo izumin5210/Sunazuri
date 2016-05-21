@@ -1,18 +1,11 @@
 package info.izumin.android.sunazuri.infrastructure.repository.source.oauth;
 
-import com.facebook.crypto.Crypto;
-import com.facebook.crypto.exception.CryptoInitializationException;
-import com.facebook.crypto.exception.KeyChainException;
-import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity;
 import info.izumin.android.sunazuri.infrastructure.api.OauthApi;
 import info.izumin.android.sunazuri.infrastructure.dao.AccessTokenDao;
+import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity;
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
+import info.izumin.android.sunazuri.infrastructure.util.Encryptor;
 import rx.Single;
-import rx.exceptions.Exceptions;
-
-import java.io.IOException;
-
-import static info.izumin.android.sunazuri.infrastructure.util.EncryptionUtils.encrypt;
 
 /**
  * Created by izumin on 5/13/2016 AD.
@@ -23,19 +16,16 @@ class OauthRemoteDataSource implements OauthDataSource {
     private final OauthApi oauthApi;
     private final OauthParams oauthParams;
     private final AccessTokenDao accessTokenDao;
-    private final Crypto crypto;
-    private final String keyStoreAlias;
+    private final Encryptor encryptor;
 
     OauthRemoteDataSource(OauthApi oauthApi,
                           OauthParams oauthParams,
                           AccessTokenDao accessTokenDao,
-                          Crypto crypto,
-                          String keyStoreAlias) {
+                          Encryptor encryptor) {
         this.oauthApi = oauthApi;
         this.oauthParams = oauthParams;
         this.accessTokenDao = accessTokenDao;
-        this.crypto = crypto;
-        this.keyStoreAlias = keyStoreAlias;
+        this.encryptor = encryptor;
     }
 
     @Override
@@ -49,15 +39,10 @@ class OauthRemoteDataSource implements OauthDataSource {
         )
                 .map(token -> {
                     final String planToken = token.accessToken;
-                    try {
-                        token.accessToken = encrypt(crypto, keyStoreAlias, token.accessToken);
-                        accessTokenDao.upsert(token);
-                        token.accessToken = planToken;
-                        return token;
-                    } catch (IOException | KeyChainException | CryptoInitializationException e) {
-                        e.printStackTrace();
-                        throw Exceptions.propagate(e);
-                    }
+                    token.accessToken = encryptor.encrypt(token.accessToken);
+                    accessTokenDao.upsert(token);
+                    token.accessToken = planToken;
+                    return token;
                 });
     }
 }
