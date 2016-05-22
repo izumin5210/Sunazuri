@@ -1,6 +1,7 @@
 package info.izumin.android.sunazuri.infrastructure.entity;
 
 import com.github.gfx.android.orma.annotation.Column;
+import com.github.gfx.android.orma.annotation.PrimaryKey;
 import com.github.gfx.android.orma.annotation.Table;
 import com.github.gfx.static_gson.annotation.JsonSerializable;
 import com.google.gson.FieldNamingPolicy;
@@ -22,6 +23,7 @@ public class AccessTokenEntity {
     @Column
     public String scope;
 
-    @Column(indexed = true)
+    @PrimaryKey(auto = false)
+    @Column
     public AuthorizedUserEntity user;
 }
