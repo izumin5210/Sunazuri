@@ -56,8 +56,6 @@ class AccessTokenDaoTest {
     fun testInsert() {
         dao.upsert(TOKEN)
 
-        System.out.println(orma.db.selectFromAccessTokenEntity().userEq(USER_ID).buildQuery())
-        System.out.println(orma.db.selectFromAccessTokenEntity().userEq(USER_ID).buildQueryWithColumns())
         expect(1, { orma.db.selectFromAuthorizedUserEntity().count() })
         expect(1, { orma.db.selectFromAccessTokenEntity().count() })
         expect(1, { orma.db.selectFromAccessTokenEntity().userEq(USER_ID).count() })
