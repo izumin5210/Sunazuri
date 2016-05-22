@@ -1,5 +1,6 @@
 package info.izumin.android.sunazuri.infrastructure.repository;
 
+import info.izumin.android.sunazuri.domain.entity.AuthorizedUser;
 import info.izumin.android.sunazuri.domain.entity.Team;
 import info.izumin.android.sunazuri.domain.repository.TeamsRepository;
 import info.izumin.android.sunazuri.infrastructure.repository.source.team.TeamsDataSourceFactory;
@@ -22,12 +23,7 @@ class TeamsRepositoryImpl implements TeamsRepository {
     }
 
     @Override
-    public Single<List<Team>> get() {
-        return null;
-    }
-
-    @Override
-    public Single<Team> get(String teamName) {
+    public Single<List<Team>> get(AuthorizedUser user) {
         return null;
     }
 }
