@@ -1,6 +1,6 @@
 package info.izumin.android.sunazuri.infrastructure.api;
 
-import info.izumin.android.sunazuri.domain.entity.AccessToken;
+import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -12,7 +12,7 @@ import rx.Single;
  */
 public interface OauthApi {
     @POST("/oauth/token")
-    Single<AccessToken> fetchToken(
+    Single<AccessTokenEntity> fetchToken(
             @Query("client_id")     String clientId,
             @Query("client_secret") String clientSecret,
             @Query("grant_type")    String grantType,

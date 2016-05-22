@@ -1,15 +1,11 @@
 package info.izumin.android.sunazuri.infrastructure;
 
 import android.content.Context;
-import com.facebook.android.crypto.keychain.AndroidConceal;
-import com.facebook.android.crypto.keychain.SharedPrefsBackedKeyChain;
-import com.facebook.crypto.Crypto;
-import com.facebook.crypto.CryptoConfig;
-import com.facebook.crypto.keychain.KeyChain;
 import dagger.Module;
 import dagger.Provides;
 import info.izumin.android.sunazuri.infrastructure.dao.OrmaProvider;
 import info.izumin.android.sunazuri.infrastructure.qualifier.KeyStoreAlias;
+import info.izumin.android.sunazuri.infrastructure.util.Encryptor;
 
 import javax.inject.Singleton;
 
@@ -48,14 +44,8 @@ public class InfrastructureModule {
     }
 
     @Provides
-    @Singleton
-    KeyChain keyChain(Context context) {
-        return new SharedPrefsBackedKeyChain(context, CryptoConfig.KEY_256);
-    }
+    Encryptor encryptor(Context context, @KeyStoreAlias String keyStoreAlias) {
+        return new Encryptor(context, keyStoreAlias);
 
-    @Provides
-    @Singleton
-    Crypto crypto(KeyChain keyChain) {
-        return AndroidConceal.get().createDefaultCrypto(keyChain);
     }
 }

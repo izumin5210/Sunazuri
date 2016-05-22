@@ -104,6 +104,9 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.0'
     compile 'com.eccyan:rxjava-optional:1.1.0'
 
+    kapt 'com.google.guava:guava:19.0'
+    kapt 'com.android.databinding:compiler:2.1.0'
+
     compile 'com.google.dagger:dagger:2.4'
     kapt 'com.google.dagger:dagger-compiler:2.4'
     provided 'javax.annotation:jsr250-api:1.0'
@@ -141,4 +144,6 @@ dependencies {
     testCompile 'com.squareup.assertj:assertj-android:1.1.1'
 
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+
+    testCompile 'com.squareup.retrofit2:retrofit-mock:2.0.2'
 }

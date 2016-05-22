@@ -1,7 +1,7 @@
 package info.izumin.android.sunazuri.infrastructure.repository;
 
-import info.izumin.android.sunazuri.domain.entity.Team;
-import info.izumin.android.sunazuri.domain.entity.TeamStats;
+import info.izumin.android.sunazuri.infrastructure.entity.TeamEntity;
+import info.izumin.android.sunazuri.infrastructure.entity.TeamStatsEntity;
 import info.izumin.android.sunazuri.domain.repository.TeamsRepository;
 import info.izumin.android.sunazuri.infrastructure.repository.source.team.TeamsDataSourceFactory;
 import rx.Observable;
@@ -23,17 +23,17 @@ class TeamsRepositoryImpl implements TeamsRepository {
     }
 
     @Override
-    public Observable<List<Team>> get() {
+    public Observable<List<TeamEntity>> get() {
         return null;
     }
 
     @Override
-    public Observable<Team> get(String teamName) {
+    public Observable<TeamEntity> get(String teamName) {
         return null;
     }
 
     @Override
-    public Observable<TeamStats> getStats(String teamName) {
+    public Observable<TeamStatsEntity> getStats(String teamName) {
         return null;
     }
 }

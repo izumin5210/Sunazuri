@@ -1,6 +1,6 @@
 package info.izumin.android.sunazuri.infrastructure.repository;
 
-import info.izumin.android.sunazuri.domain.entity.AccessToken;
+import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity;
 import info.izumin.android.sunazuri.domain.repository.OauthRepository;
 import info.izumin.android.sunazuri.infrastructure.repository.source.oauth.OauthDataSourceFactory;
 import rx.Single;
@@ -23,7 +23,7 @@ class OauthRepositoryImpl implements OauthRepository {
     }
 
     @Override
-    public Single<AccessToken> getToken(String code) {
+    public Single<AccessTokenEntity> getToken(String code) {
         return dataSourceFactory.createRemoteDataSource()
                 .getToken(code);
     }
