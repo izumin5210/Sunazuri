@@ -25,4 +25,8 @@ public class TeamsDataSourceFactory {
     public TeamsDataSource createRemoteDataSource() {
         return new TeamsRemoteDataSource(teamsApi, teamsDao);
     }
+
+    public TeamsDataSource createLocalDataSource() {
+        return new TeamsLocalDataSource(teamsDao);
+    }
 }
