@@ -3,7 +3,7 @@ package info.izumin.android.sunazuri.data;
 import dagger.Module;
 import dagger.Provides;
 import info.izumin.android.droidux.thunk.ThunkMiddleware;
-import info.izumin.android.sunazuri.data.action.user.AuthorizedUsersReducer;
+import info.izumin.android.sunazuri.data.reducer.AuthorizedUsersReducer;
 import info.izumin.android.sunazuri.domain.DroiduxRootStore;
 import info.izumin.android.sunazuri.domain.RootStore;
 import info.izumin.android.sunazuri.domain.model.AuthorizedUsers;

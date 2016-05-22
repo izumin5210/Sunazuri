@@ -2,7 +2,7 @@ package info.izumin.android.sunazuri.domain;
 
 import info.izumin.android.droidux.BaseStore;
 import info.izumin.android.droidux.annotation.Store;
-import info.izumin.android.sunazuri.data.action.user.AuthorizedUsersReducer;
+import info.izumin.android.sunazuri.data.reducer.AuthorizedUsersReducer;
 import info.izumin.android.sunazuri.domain.model.AuthorizedUsers;
 
 /**

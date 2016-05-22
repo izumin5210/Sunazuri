@@ -1,9 +1,9 @@
-package info.izumin.android.sunazuri.data.action.user;
+package info.izumin.android.sunazuri.data.reducer;
 
-import info.izumin.android.droidux.Action
 import info.izumin.android.droidux.annotation.Dispatchable
-import info.izumin.android.droidux.annotation.Reducer;
-import info.izumin.android.sunazuri.domain.model.AuthorizedUsers;
+import info.izumin.android.droidux.annotation.Reducer
+import info.izumin.android.sunazuri.data.action.user.AddAuthorizedUserAction
+import info.izumin.android.sunazuri.domain.model.AuthorizedUsers
 
 /**
  * Created by izumin on 5/22/2016 AD.
