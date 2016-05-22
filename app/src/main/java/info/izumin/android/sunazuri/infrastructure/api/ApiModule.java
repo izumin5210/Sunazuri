@@ -13,6 +13,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import javax.inject.Singleton;
+import java.util.List;
 
 /**
  * Created by izumin on 5/13/2016 AD.
@@ -23,10 +24,12 @@ public class ApiModule {
 
     private final String apiEndpoint;
     private final OauthParams oauthParams;
+    private final List<String> responseEnvelopKeys;
 
-    public ApiModule(String apiEndpoint, OauthParams oauthParams) {
+    public ApiModule(String apiEndpoint, OauthParams oauthParams, List<String> responseEnvelopKeys) {
         this.apiEndpoint = apiEndpoint;
         this.oauthParams = oauthParams;
+        this.responseEnvelopKeys = responseEnvelopKeys;
     }
 
     @Provides
@@ -47,9 +50,16 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    Gson gson() {
+    EnvelopeTypeAdapterFactory envelopeTypeAdapterFactory() {
+        return new EnvelopeTypeAdapterFactory(responseEnvelopKeys);
+    }
+
+    @Provides
+    @Singleton
+    Gson gson(EnvelopeTypeAdapterFactory envelopeTypeAdapterFactory) {
         return new GsonBuilder()
                 .registerTypeAdapterFactory(StaticGsonTypeAdapterFactory.newInstance())
+                .registerTypeAdapterFactory(envelopeTypeAdapterFactory)
                 .create();
     }
 
