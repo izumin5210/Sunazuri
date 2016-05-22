@@ -4,11 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import info.izumin.android.sunazuri.data.DaggerDataComponent;
 import info.izumin.android.sunazuri.data.DataComponent;
-import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
 import info.izumin.android.sunazuri.infrastructure.DaggerInfrastructureComponent;
 import info.izumin.android.sunazuri.infrastructure.InfrastructureComponent;
 import info.izumin.android.sunazuri.infrastructure.InfrastructureModule;
 import info.izumin.android.sunazuri.infrastructure.api.ApiModule;
+import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by izumin on 5/13/2016 AD.
@@ -47,7 +50,7 @@ public class Sunazuri extends Application {
     private InfrastructureComponent getInfrastructureComponent() {
         return DaggerInfrastructureComponent.builder()
                 .infrastructureModule(new InfrastructureModule(this, BuildConfig.KEYSTORE_ALIAS))
-                .apiModule(new ApiModule(BuildConfig.ESA_API_ENDPOINT, getOauthParams()))
+                .apiModule(new ApiModule(BuildConfig.ESA_API_ENDPOINT, getOauthParams(), getResponseEnvelopeKeys()))
                 .build();
     }
 
@@ -62,5 +65,11 @@ public class Sunazuri extends Application {
                 "/oauth/authorize",
                 BuildConfig.ESA_OAUTH_GRANT_TYPE
         );
+    }
+
+    private List<String> getResponseEnvelopeKeys() {
+        return new ArrayList<String>(){{
+            add("teams");
+        }};
     }
 }

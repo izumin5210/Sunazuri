@@ -2,6 +2,7 @@ package info.izumin.android.sunazuri.data;
 
 import dagger.Component;
 import info.izumin.android.sunazuri.data.action.ActionModule;
+import info.izumin.android.sunazuri.data.action.team.TeamActionCreator;
 import info.izumin.android.sunazuri.data.action.user.UserActionCreator;
 import info.izumin.android.sunazuri.domain.RootStore;
 import info.izumin.android.sunazuri.infrastructure.InfrastructureComponent;
@@ -25,4 +26,5 @@ public interface DataComponent {
     OauthParams oauthParams();
 
     UserActionCreator userActionCreator();
+    TeamActionCreator teamActionCreator();
 }
