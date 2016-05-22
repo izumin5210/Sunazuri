@@ -12,9 +12,10 @@ import java.util.*
 class MockUsersApi(val delegate: BehaviorDelegate<UsersApi>) : UsersApi {
 
     val USER = AuthorizedUserEntity()
+    val USER_ID: Long = 1
 
     init {
-        USER.id         = 1
+        USER.id         = USER_ID
         USER.name       = "test user"
         USER.screenName = "test_user"
         USER.createdAt  = Date()

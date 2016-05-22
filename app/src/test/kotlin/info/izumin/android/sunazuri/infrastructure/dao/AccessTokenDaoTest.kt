@@ -3,8 +3,6 @@ package info.izumin.android.sunazuri.infrastructure.dao
 import info.izumin.android.sunazuri.BuildConfig
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
 import info.izumin.android.sunazuri.infrastructure.entity.AuthorizedUserEntity
-import info.izumin.android.sunazuri.infrastructure.entity.OrmaDatabase
-import info.izumin.android.sunazuri.infrastructure.mock.dao.MockOrmaProvider
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,35 +19,36 @@ import kotlin.test.expect
 @Config(constants = BuildConfig::class, sdk = intArrayOf(21))
 class AccessTokenDaoTest {
 
-    val TOKEN = AccessTokenEntity()
-    val USER = AuthorizedUserEntity()
+    companion object {
+        val USER_ID: Long = 1
+        val TOKEN = AccessTokenEntity()
+        val USER = AuthorizedUserEntity()
 
-    init {
-        USER.id         = 1
-        USER.name       = "test user"
-        USER.screenName = "test_user"
-        USER.createdAt  = Date()
-        USER.updatedAt  = Date()
-        USER.icon       = "http://example.com/test_user.png"
-        USER.email      = "test@example.com"
+        init {
+            USER.id         = USER_ID
+            USER.name       = "test user"
+            USER.screenName = "test_user"
+            USER.createdAt  = Date()
+            USER.updatedAt  = Date()
+            USER.icon       = "http://example.com/test_user.png"
+            USER.email      = "test@example.com"
 
-        TOKEN.accessToken   = "testtoken"
-        TOKEN.scope         = "read+write"
-        TOKEN.tokenType     = "bearer"
-        TOKEN.user          = USER
+            TOKEN.accessToken   = "testtoken"
+            TOKEN.scope         = "read+write"
+            TOKEN.tokenType     = "bearer"
+            TOKEN.user          = USER
+        }
     }
 
 
     val context = RuntimeEnvironment.application.applicationContext
 
-    lateinit var db: OrmaDatabase
     lateinit var orma: OrmaProvider
     lateinit var dao: AccessTokenDao
 
     @Before
     fun setUp() {
-        db = OrmaDatabase.builder(context).name(null).build()
-        orma = MockOrmaProvider(context, db)
+        orma = OrmaProvider(context, null)
         dao = AccessTokenDao(orma)
     }
 
@@ -57,9 +56,11 @@ class AccessTokenDaoTest {
     fun testInsert() {
         dao.upsert(TOKEN)
 
-        expect(1, { db.selectFromAuthorizedUserEntity().count() })
-        expect(1, { db.selectFromAccessTokenEntity().count() })
-        expect(1, { db.selectFromAccessTokenEntity().userEq(USER.id).count() })
+        System.out.println(orma.db.selectFromAccessTokenEntity().userEq(USER_ID).buildQuery())
+        System.out.println(orma.db.selectFromAccessTokenEntity().userEq(USER_ID).buildQueryWithColumns())
+        expect(1, { orma.db.selectFromAuthorizedUserEntity().count() })
+        expect(1, { orma.db.selectFromAccessTokenEntity().count() })
+        expect(1, { orma.db.selectFromAccessTokenEntity().userEq(USER_ID).count() })
     }
 
     @Test
@@ -69,9 +70,9 @@ class AccessTokenDaoTest {
         USER.name = "new test user"
         dao.upsert(TOKEN)
 
-        expect(1, { db.selectFromAuthorizedUserEntity().count() })
-        expect(1, { db.selectFromAccessTokenEntity().count() })
-        expect("newtesttoken", { db.selectFromAccessTokenEntity().userEq(USER.id).value().accessToken })
-        expect("new test user", { db.selectFromAuthorizedUserEntity().idEq(USER.id).value().name })
+        expect(1, { orma.db.selectFromAuthorizedUserEntity().count() })
+        expect(1, { orma.db.selectFromAccessTokenEntity().count() })
+        expect("newtesttoken", { orma.db.selectFromAccessTokenEntity().userEq(USER_ID).value().accessToken })
+        expect("new test user", { orma.db.selectFromAuthorizedUserEntity().idEq(USER_ID).value().name })
     }
 }

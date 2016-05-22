@@ -12,7 +12,6 @@ import info.izumin.android.sunazuri.infrastructure.entity.OauthParams
 import info.izumin.android.sunazuri.infrastructure.entity.OrmaDatabase
 import info.izumin.android.sunazuri.infrastructure.mock.api.MockOauthApi
 import info.izumin.android.sunazuri.infrastructure.mock.api.MockUsersApi
-import info.izumin.android.sunazuri.infrastructure.mock.dao.MockOrmaProvider
 import info.izumin.android.sunazuri.infrastructure.mock.util.MockEncryptor
 import org.junit.Before
 import org.junit.Test
@@ -62,7 +61,6 @@ class OauthRemoteDataSourceTest {
     val usersApi = MockUsersApi(mockRetrofit.create(UsersApi::class.java))
     val oauthApi = MockOauthApi(mockRetrofit.create(OauthApi::class.java))
 
-    lateinit var db: OrmaDatabase
     lateinit var orma: OrmaProvider
     lateinit var accessTokenDao: AccessTokenDao
 
@@ -70,8 +68,7 @@ class OauthRemoteDataSourceTest {
 
     @Before
     fun setUp() {
-        db = OrmaDatabase.builder(context).name(null).build()
-        orma = MockOrmaProvider(context, db)
+        orma = OrmaProvider(context, null)
         accessTokenDao = AccessTokenDao(orma)
 
         dataSource = OauthRemoteDataSource(usersApi, oauthApi, oauthParams, accessTokenDao, encryptor)
@@ -85,13 +82,13 @@ class OauthRemoteDataSourceTest {
         subscriber.awaitTerminalEvent()
         subscriber.assertNoErrors()
         subscriber.onNextEvents[0].accessToken = oauthApi.TOKEN.accessToken
-        subscriber.onNextEvents[0].user.id = usersApi.USER.id
+        subscriber.onNextEvents[0].user.id = usersApi.USER_ID
 
         expect(oauthApi.TOKEN.accessToken, {
-            encryptor.decrypt(db.selectFromAccessTokenEntity().userEq(usersApi.USER.id).value().accessToken)
+            encryptor.decrypt(orma.db.selectFromAccessTokenEntity().userEq(usersApi.USER_ID).value().accessToken)
         })
         expect(usersApi.USER.screenName, {
-            db.selectFromAuthorizedUserEntity().idEq(usersApi.USER.id).value().screenName
+            orma.db.selectFromAuthorizedUserEntity().idEq(usersApi.USER_ID).value().screenName
         })
     }
 }

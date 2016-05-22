@@ -6,6 +6,14 @@ import info.izumin.android.sunazuri.infrastructure.entity.OrmaDatabase
 /**
  * Created by izumin on 5/21/2016 AD.
  */
-open class OrmaProvider(val context: Context) {
-    open val db by lazy { OrmaDatabase.builder(context).build() }
+class OrmaProvider {
+    lateinit var db: OrmaDatabase
+
+    constructor(context: Context) {
+        db = OrmaDatabase.builder(context).build()
+    }
+
+    constructor(context: Context, name: String?) {
+        db = OrmaDatabase.builder(context).name(name).build()
+    }
 }
