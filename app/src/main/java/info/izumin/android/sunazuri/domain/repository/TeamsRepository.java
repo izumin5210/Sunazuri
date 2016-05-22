@@ -1,8 +1,7 @@
 package info.izumin.android.sunazuri.domain.repository;
 
-import info.izumin.android.sunazuri.infrastructure.entity.TeamEntity;
-import info.izumin.android.sunazuri.infrastructure.entity.TeamStatsEntity;
-import rx.Observable;
+import info.izumin.android.sunazuri.domain.entity.Team;
+import rx.Single;
 
 import java.util.List;
 
@@ -10,7 +9,6 @@ import java.util.List;
  * Created by izumin on 5/13/2016 AD.
  */
 public interface TeamsRepository {
-    Observable<List<TeamEntity>> get();
-    Observable<TeamEntity> get(String teamName);
-    Observable<TeamStatsEntity> getStats(String teamName);
+    Single<List<Team>> get();
+    Single<Team> get(String teamName);
 }

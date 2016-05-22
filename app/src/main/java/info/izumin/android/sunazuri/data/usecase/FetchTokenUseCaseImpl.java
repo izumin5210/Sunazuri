@@ -1,7 +1,6 @@
 package info.izumin.android.sunazuri.data.usecase;
 
 import android.net.Uri;
-import info.izumin.android.sunazuri.data.action.SetAccessTokenAction;
 import info.izumin.android.sunazuri.domain.RootStore;
 import info.izumin.android.sunazuri.domain.repository.OauthRepository;
 import info.izumin.android.sunazuri.domain.usecase.FetchTokenUseCase;
@@ -28,9 +27,6 @@ class FetchTokenUseCaseImpl implements FetchTokenUseCase {
     public Completable execute(String callbackUri) {
         final String code = Uri.parse(callbackUri).getQueryParameter("code");
         return repo.getToken(code)
-                .map(SetAccessTokenAction::new)
-                .toObservable()
-                .flatMap(store::dispatch)
                 .toCompletable();
     }
 }
