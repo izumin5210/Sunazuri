@@ -14,9 +14,6 @@ import com.google.gson.FieldNamingPolicy;
 public class TeamStatsEntity {
     public static final String TAG = TeamStatsEntity.class.getSimpleName();
 
-    @PrimaryKey(auto = true, autoincrement = true)
-    public long id;
-
     @Column
     public int members;
 
@@ -38,6 +35,7 @@ public class TeamStatsEntity {
     @Column
     public int monthlyActiveUsers;
 
-    @Column(indexed = true)
+    @PrimaryKey(auto = false)
+    @Column
     public TeamEntity team;
 }
