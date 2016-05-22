@@ -8,8 +8,8 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
 import info.izumin.android.sunazuri.R;
 import info.izumin.android.sunazuri.Sunazuri;
+import info.izumin.android.sunazuri.data.action.user.UserActionCreator;
 import info.izumin.android.sunazuri.domain.RootStore;
-import info.izumin.android.sunazuri.domain.usecase.FetchTokenUseCase;
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -21,7 +21,7 @@ public class OauthActivity extends AppCompatActivity {
 
     @Inject RootStore store;
     @Inject OauthParams oauthParams;
-    @Inject FetchTokenUseCase fetchTokenUseCase;
+    @Inject UserActionCreator userActionCreator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class OauthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_oauth);
         inject();
 
-        if (store.getAccessToken() == null) {
+        if (store.getAuthorizedUsers().isEmpty()) {
             CustomTabsIntent intent = new CustomTabsIntent.Builder().build();
             intent.launchUrl(this, Uri.parse(oauthParams.getAuthorizeUri()));
         }
@@ -39,10 +39,10 @@ public class OauthActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         inject();
-        fetchTokenUseCase.execute(intent.getDataString())
+        store.dispatch(userActionCreator.createAuthAction(intent.getDataString()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::returnToMain);
+                .subscribe(_a -> returnToMain());
     }
 
     private void returnToMain() {

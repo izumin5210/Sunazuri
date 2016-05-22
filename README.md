@@ -13,8 +13,9 @@ Sunazuri adopted multi-layered architecture inspired by [The Clean Architecture]
     - includes abstractions of I/O (DB, Web API, local cache, etc.)
     - "Repository pattern"
 - Data Layer
-    - includes 1 state container (using [Droidux][droidux])
-    - includes use-cases that abstracts repository accesses and state management
+    - includes 1 huge state container (using [Droidux][droidux])
+    - includes some reducers that manages states
+    - includes many actions that abstracts repository accesses
 
 ```
 app/src/main/java/info/izumin/android/sunazuri/
@@ -27,13 +28,12 @@ app/src/main/java/info/izumin/android/sunazuri/
 │   ├── DataModule.java
 │   ├── DataScope.java
 │   ├── action
-│   ├── reducer
-│   └── usecase
+│   └── reducer
 ├── domain
 │   ├── RootStore.java
 │   ├── entity
-│   ├── repository
-│   └── usecase
+│   ├── model
+│   └── repository
 ├── infrastructure
 │   ├── InfrastructureComponent.java
 │   ├── InfrastructureModule.java
