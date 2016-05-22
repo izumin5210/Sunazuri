@@ -1,12 +1,9 @@
 package info.izumin.android.sunazuri.data;
 
 import dagger.Component;
-import info.izumin.android.sunazuri.data.usecase.UseCaseModule;
 import info.izumin.android.sunazuri.data.action.ActionModule;
 import info.izumin.android.sunazuri.data.action.user.UserActionCreator;
 import info.izumin.android.sunazuri.domain.RootStore;
-import info.izumin.android.sunazuri.domain.usecase.FetchTeamsUseCase;
-import info.izumin.android.sunazuri.domain.usecase.FetchTokenUseCase;
 import info.izumin.android.sunazuri.infrastructure.InfrastructureComponent;
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
 
@@ -19,7 +16,6 @@ import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
                 InfrastructureComponent.class
         },
         modules = {
-                UseCaseModule.class,
                 ActionModule.class,
                 DataModule.class
         }
@@ -28,7 +24,5 @@ public interface DataComponent {
     RootStore rootStore();
     OauthParams oauthParams();
 
-    FetchTokenUseCase fetchTokenUseCase();
-    FetchTeamsUseCase fetchTeamsUseCase();
     UserActionCreator userActionCreator();
 }
