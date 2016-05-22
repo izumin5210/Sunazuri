@@ -2,7 +2,7 @@ package info.izumin.android.sunazuri.data;
 
 import dagger.Module;
 import dagger.Provides;
-import info.izumin.android.sunazuri.data.reducer.AccessTokenReducer;
+import info.izumin.android.droidux.thunk.ThunkMiddleware;
 import info.izumin.android.sunazuri.domain.DroiduxRootStore;
 import info.izumin.android.sunazuri.domain.RootStore;
 
@@ -17,7 +17,7 @@ public class DataModule {
     @DataScope
     RootStore rootStore() {
         return DroiduxRootStore.builder()
-                .setReducer(new AccessTokenReducer())
+                .addMiddleware(new ThunkMiddleware())
                 .build();
     }
 }

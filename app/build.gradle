@@ -113,6 +113,7 @@ dependencies {
 
     compile 'info.izumin.android:droidux:0.6.0'
     kapt 'info.izumin.android:droidux-processor:0.6.0'
+    compile 'info.izumin.android:droidux-thunk:0.3.0'
 
     compile 'com.github.gfx.android.orma:orma:2.4.5'
     kapt 'com.github.gfx.android.orma:orma-processor:2.4.5'
