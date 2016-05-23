@@ -9,6 +9,7 @@ import info.izumin.android.sunazuri.infrastructure.InfrastructureComponent;
 import info.izumin.android.sunazuri.infrastructure.InfrastructureModule;
 import info.izumin.android.sunazuri.infrastructure.api.ApiModule;
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
+import timber.log.Timber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +30,17 @@ public class Sunazuri extends Application {
     public void onCreate() {
         super.onCreate();
         setupComponent();
+        setupTimber();
     }
 
     public AppComponent getComponent() {
         return component;
+    }
+
+    private void setupTimber() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
     }
 
     private void setupComponent() {
