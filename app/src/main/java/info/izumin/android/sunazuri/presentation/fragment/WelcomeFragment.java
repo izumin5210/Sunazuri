@@ -1,6 +1,7 @@
 package info.izumin.android.sunazuri.presentation.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -41,6 +42,18 @@ public class WelcomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentWelcomeBinding.bind(view);
         binding.setHandler(handler);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RequestCode.OAUTH.code) {
+            if (resultCode == Activity.RESULT_OK) {
+                // TODO: not yet implemented
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                // TODO: not yet implemented
+            }
+        }
     }
 
     private final Handler handler = new Handler() {
