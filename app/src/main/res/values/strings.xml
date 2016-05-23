@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">Sunazuri</string>
 
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+    <string name="category">Category</string>
+
+    <!-- menu -->
+    <string name="menu_about">About this app</string>
+
     <!-- WelcomeFragment -->
     <string name="btn_login">Login with esa.io</string>
     <string name="text_app_headline">share, develop, organize and eat.</string>
