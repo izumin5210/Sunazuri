@@ -42,11 +42,19 @@ public class OauthActivity extends AppCompatActivity {
         store.dispatch(userActionCreator.createAuthAction(intent.getDataString()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(_a -> returnToMain());
+                .subscribe(
+                        _a -> returnToMain(),
+                        this::returnToMain
+                );
     }
 
     private void returnToMain() {
         setResult(Activity.RESULT_OK);
+        finish();
+    }
+
+    private void returnToMain(Throwable throwable) {
+        setResult(Activity.RESULT_CANCELED);
         finish();
     }
 

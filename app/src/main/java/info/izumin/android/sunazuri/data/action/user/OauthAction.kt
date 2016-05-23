@@ -5,6 +5,7 @@ import info.izumin.android.droidux.Action
 import info.izumin.android.droidux.Dispatcher
 import info.izumin.android.sunazuri.data.action.common.BaseAction
 import info.izumin.android.sunazuri.data.action.common.BaseAsyncAction
+import info.izumin.android.sunazuri.domain.exception.WebApiError
 import info.izumin.android.sunazuri.domain.repository.OauthRepository
 import rx.Observable
 
@@ -17,7 +18,13 @@ class OauthAction constructor(
 ) : BaseAsyncAction<OauthAction.RequestValue>() {
 
     override fun call(dispatcher: Dispatcher): Observable<Action> {
-        val code = Uri.parse(value.callbackUri).getQueryParameter("code")
+        val uri = Uri.parse(value.callbackUri)
+        val code = uri.getQueryParameter("code")
+        if (code.isEmpty()) {
+            val error = uri.getQueryParameter("error")
+            val msg = uri.getQueryParameter("error_description")
+            return Observable.error(WebApiError(error, msg))
+        }
         return repo.getToken(code)
                 .toObservable()
                 .map { userActionCreator.createAddAuthorizedUserAction(it) }
