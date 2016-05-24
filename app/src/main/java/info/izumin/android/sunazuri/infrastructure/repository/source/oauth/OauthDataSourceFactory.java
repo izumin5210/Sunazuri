@@ -35,6 +35,10 @@ public class OauthDataSourceFactory {
         this.encryptor = encryptor;
     }
 
+    public OauthDataSource createLocalDataSource() {
+        return new OauthLocalDataSource(accessTokenDao);
+    }
+
     public OauthDataSource createRemoteDataSource() {
         return new OauthRemoteDataSource(usersApi, oauthApi, oauthParams, accessTokenDao, encryptor);
     }

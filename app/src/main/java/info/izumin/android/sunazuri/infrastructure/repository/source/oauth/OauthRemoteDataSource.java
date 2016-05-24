@@ -8,6 +8,8 @@ import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
 import info.izumin.android.sunazuri.infrastructure.util.Encryptor;
 import rx.Single;
 
+import java.util.List;
+
 /**
  * Created by izumin on 5/13/2016 AD.
  */
@@ -53,5 +55,10 @@ class OauthRemoteDataSource implements OauthDataSource {
                     token.accessToken = planToken;
                     return token;
                 });
+    }
+
+    @Override
+    public Single<List<AccessTokenEntity>> getTokens() {
+        throw new UnsupportedOperationException();
     }
 }
