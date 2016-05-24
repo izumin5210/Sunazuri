@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_categories"
+          android:title="@string/category" >
+    </item>
+    <group android:id="@+id/menu_others">
+        <item android:title="@string/menu_about" />
+    </group>
+</menu>
