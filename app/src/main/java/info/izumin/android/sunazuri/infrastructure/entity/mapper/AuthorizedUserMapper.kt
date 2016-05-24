@@ -4,6 +4,7 @@ import info.izumin.android.sunazuri.domain.entity.AccessToken
 import info.izumin.android.sunazuri.domain.entity.AuthorizedUser
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
 import info.izumin.android.sunazuri.infrastructure.entity.AuthorizedUserEntity
+import rx.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,6 +15,12 @@ import javax.inject.Singleton
 class AuthorizedUserMapper @Inject constructor(
         val teamMapper: TeamMapper
 ) {
+
+    fun transform(entities: List<AccessTokenEntity>): MutableList<AuthorizedUser?>? {
+        return Observable.from(entities).map { transform(it) }
+                .toList().toBlocking().first()
+    }
+
     fun transform(entity: AccessTokenEntity?): AuthorizedUser? {
         var user: AuthorizedUser? = null
         if (entity!= null && entity.user != null) {
