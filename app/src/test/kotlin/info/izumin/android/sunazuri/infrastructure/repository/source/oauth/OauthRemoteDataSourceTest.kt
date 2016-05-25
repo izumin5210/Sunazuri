@@ -97,5 +97,8 @@ class OauthRemoteDataSourceTest {
         expect(usersApi.USER.screenName, {
             orma.db.selectFromAuthorizedUserEntity().idEq(usersApi.USER_ID).value().screenName
         })
+        expect(usersApi.USER_ID, {
+            prefProvider.defaultPrefs.userId
+        })
     }
 }
