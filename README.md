@@ -66,6 +66,8 @@ app/src/main/java/info/izumin/android/sunazuri/
     - [Android-Orma](https://github.com/gfx/Android-Orma)
     - [Retrofit2](http://square.github.io/retrofit/)
     - [KVS Schema](https://github.com/rejasupotaro/kvs-schema/)
+- UI
+    - [Picasso](http://square.github.io/picasso/)
 - misc
     - [Gson](https://github.com/facebook/conceal) / [StaticGson](https://github.com/gfx/StaticGson)
     - [Conceal](https://github.com/facebook/conceal)
