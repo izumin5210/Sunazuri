@@ -40,6 +40,7 @@ app/src/main/java/info/izumin/android/sunazuri/
 │   ├── api
 │   ├── dao
 │   ├── entity
+│   ├── pref
 │   ├── qualifier
 │   ├── repository
 │   │   └── source
@@ -64,6 +65,7 @@ app/src/main/java/info/izumin/android/sunazuri/
 - I/O
     - [Android-Orma](https://github.com/gfx/Android-Orma)
     - [Retrofit2](http://square.github.io/retrofit/)
+    - [KVS Schema](https://github.com/rejasupotaro/kvs-schema/)
 - misc
     - [Gson](https://github.com/facebook/conceal) / [StaticGson](https://github.com/gfx/StaticGson)
     - [Conceal](https://github.com/facebook/conceal)
