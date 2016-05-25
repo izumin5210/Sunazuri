@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import info.izumin.android.sunazuri.domain.repository.OauthRepository;
 import info.izumin.android.sunazuri.domain.repository.TeamsRepository;
+import info.izumin.android.sunazuri.domain.repository.UsersRepository;
 
 import javax.inject.Singleton;
 
@@ -23,6 +24,12 @@ public class RepositoryModule {
     @Provides
     @Singleton
     OauthRepository oauthRepository(OauthRepositoryImpl repo) {
+        return repo;
+    }
+
+    @Provides
+    @Singleton
+    UsersRepository usersRepository(UsersRepositoryImpl repo) {
         return repo;
     }
 }
