@@ -6,6 +6,7 @@ import info.izumin.android.sunazuri.infrastructure.dao.AccessTokenDao;
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity;
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
 import info.izumin.android.sunazuri.infrastructure.util.Encryptor;
+import rx.Observable;
 import rx.Single;
 
 import java.util.List;
@@ -59,6 +60,11 @@ class OauthRemoteDataSource implements OauthDataSource {
 
     @Override
     public Single<List<AccessTokenEntity>> getTokens() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Observable<AccessTokenEntity> getCurrentToken() {
         throw new UnsupportedOperationException();
     }
 }
