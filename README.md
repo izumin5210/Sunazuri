@@ -69,6 +69,7 @@ app/src/main/java/info/izumin/android/sunazuri/
 - misc
     - [Gson](https://github.com/facebook/conceal) / [StaticGson](https://github.com/gfx/StaticGson)
     - [Conceal](https://github.com/facebook/conceal)
+    - [LeakCanary](https://github.com/square/leakcanary)
 
 ## Inspired by
 

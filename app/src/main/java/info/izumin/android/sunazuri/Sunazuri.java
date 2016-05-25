@@ -2,6 +2,7 @@ package info.izumin.android.sunazuri;
 
 import android.app.Application;
 import android.content.Context;
+import com.squareup.leakcanary.LeakCanary;
 import info.izumin.android.sunazuri.data.DaggerDataComponent;
 import info.izumin.android.sunazuri.data.DataComponent;
 import info.izumin.android.sunazuri.data.action.user.UserActionCreator;
@@ -38,6 +39,7 @@ public class Sunazuri extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
         setupComponent();
         setupTimber();
         initialize();
