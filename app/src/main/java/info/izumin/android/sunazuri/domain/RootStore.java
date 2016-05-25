@@ -3,7 +3,9 @@ package info.izumin.android.sunazuri.domain;
 import info.izumin.android.droidux.BaseStore;
 import info.izumin.android.droidux.annotation.Store;
 import info.izumin.android.sunazuri.data.reducer.AuthorizedUsersReducer;
+import info.izumin.android.sunazuri.data.reducer.CurrentUserReducer;
 import info.izumin.android.sunazuri.data.reducer.TeamsReducer;
+import info.izumin.android.sunazuri.domain.entity.AuthorizedUser;
 import info.izumin.android.sunazuri.domain.model.AuthorizedUsers;
 import info.izumin.android.sunazuri.domain.model.Teams;
 
@@ -12,9 +14,11 @@ import info.izumin.android.sunazuri.domain.model.Teams;
  */
 @Store({
         AuthorizedUsersReducer.class,
+        CurrentUserReducer.class,
         TeamsReducer.class
 })
 public interface RootStore extends BaseStore {
     AuthorizedUsers getAuthorizedUsers();
     Teams getTeams();
+    AuthorizedUser getCurrentUser();
 }
