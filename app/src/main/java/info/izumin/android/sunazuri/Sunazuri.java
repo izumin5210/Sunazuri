@@ -4,13 +4,18 @@ import android.app.Application;
 import android.content.Context;
 import info.izumin.android.sunazuri.data.DaggerDataComponent;
 import info.izumin.android.sunazuri.data.DataComponent;
+import info.izumin.android.sunazuri.data.action.user.UserActionCreator;
+import info.izumin.android.sunazuri.domain.RootStore;
 import info.izumin.android.sunazuri.infrastructure.DaggerInfrastructureComponent;
 import info.izumin.android.sunazuri.infrastructure.InfrastructureComponent;
 import info.izumin.android.sunazuri.infrastructure.InfrastructureModule;
 import info.izumin.android.sunazuri.infrastructure.api.ApiModule;
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,21 +25,41 @@ import java.util.List;
 public class Sunazuri extends Application {
     public static final String TAG = Sunazuri.class.getSimpleName();
 
-    private AppComponent component;
-
     public static Sunazuri get(Context context) {
         return (Sunazuri) context.getApplicationContext();
     }
+
+    @Inject RootStore store;
+    @Inject UserActionCreator userActionCreator;
+
+    private AppComponent component;
+    private CompositeSubscription subscriptions;
 
     @Override
     public void onCreate() {
         super.onCreate();
         setupComponent();
         setupTimber();
+        initialize();
+    }
+
+    @Override
+    public void onTerminate() {
+        subscriptions.clear();
+        super.onTerminate();
     }
 
     public AppComponent getComponent() {
         return component;
+    }
+
+    private void initialize() {
+        subscriptions = new CompositeSubscription();
+        subscriptions.add(
+                store.dispatch(userActionCreator.createLoadCurrentUserAction())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe()
+        );
     }
 
     private void setupTimber() {
@@ -47,6 +72,7 @@ public class Sunazuri extends Application {
         component = DaggerAppComponent.builder()
                 .dataComponent(getDataComponent())
                 .build();
+        component.inject(this);
     }
 
     private DataComponent getDataComponent() {
