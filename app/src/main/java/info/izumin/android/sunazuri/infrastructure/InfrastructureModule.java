@@ -4,6 +4,7 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 import info.izumin.android.sunazuri.infrastructure.dao.OrmaProvider;
+import info.izumin.android.sunazuri.infrastructure.pref.PrefsProvider;
 import info.izumin.android.sunazuri.infrastructure.qualifier.KeyStoreAlias;
 import info.izumin.android.sunazuri.infrastructure.util.Encryptor;
 
@@ -46,6 +47,11 @@ public class InfrastructureModule {
     @Provides
     Encryptor encryptor(Context context, @KeyStoreAlias String keyStoreAlias) {
         return new Encryptor(context, keyStoreAlias);
+    }
 
+    @Provides
+    @Singleton
+    PrefsProvider prefsProvider(Context context) {
+        return new PrefsProvider(context);
     }
 }
