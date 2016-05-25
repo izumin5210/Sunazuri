@@ -1,8 +1,8 @@
 package info.izumin.android.sunazuri.infrastructure.repository.source.oauth;
 
+import info.izumin.android.sunazuri.infrastructure.cache.LoginCache
 import info.izumin.android.sunazuri.infrastructure.dao.AccessTokenDao
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
-import info.izumin.android.sunazuri.infrastructure.pref.PrefsProvider
 import rx.Observable
 import rx.Single
 
@@ -11,11 +11,11 @@ import rx.Single
  */
 internal class OauthLocalDataSource(
         val dao: AccessTokenDao,
-        val prefs: PrefsProvider
+        val loginCache: LoginCache
 ) : OauthDataSource {
     override fun getCurrentToken(): Observable<AccessTokenEntity> {
-        if (prefs.defaultPrefs.hasUserId()) {
-            return dao.find(prefs.defaultPrefs.userId)
+        if (loginCache.isUserCached) {
+            return dao.find(loginCache.userId)
         } else {
             return Observable.empty()
         }
