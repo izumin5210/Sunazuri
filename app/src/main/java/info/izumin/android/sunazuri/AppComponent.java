@@ -18,6 +18,7 @@ import info.izumin.android.sunazuri.presentation.activity.oauth.OauthActivity;
         }
 )
 public interface AppComponent {
+    void inject(Sunazuri sunazuri);
     void inject(MainActivity activity);
     void inject(OauthActivity activity);
 }

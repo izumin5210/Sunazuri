@@ -5,14 +5,16 @@ import com.google.gson.GsonBuilder
 import info.izumin.android.sunazuri.BuildConfig
 import info.izumin.android.sunazuri.infrastructure.api.OauthApi
 import info.izumin.android.sunazuri.infrastructure.api.UsersApi
+import info.izumin.android.sunazuri.infrastructure.cache.LoginCache
+import info.izumin.android.sunazuri.infrastructure.cache.LoginCacheImpl
 import info.izumin.android.sunazuri.infrastructure.dao.AccessTokenDao
 import info.izumin.android.sunazuri.infrastructure.dao.OrmaProvider
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams
-import info.izumin.android.sunazuri.infrastructure.entity.OrmaDatabase
 import info.izumin.android.sunazuri.infrastructure.mock.api.MockOauthApi
 import info.izumin.android.sunazuri.infrastructure.mock.api.MockUsersApi
 import info.izumin.android.sunazuri.infrastructure.mock.util.MockEncryptor
+import info.izumin.android.sunazuri.infrastructure.pref.PrefsProvider
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -64,14 +66,19 @@ class OauthRemoteDataSourceTest {
     lateinit var orma: OrmaProvider
     lateinit var accessTokenDao: AccessTokenDao
 
+    lateinit var prefProvider: PrefsProvider
+    lateinit var loginCache: LoginCache
+
     lateinit var dataSource: OauthDataSource
 
     @Before
     fun setUp() {
         orma = OrmaProvider(context, null)
         accessTokenDao = AccessTokenDao(orma)
+        prefProvider = PrefsProvider(context)
+        loginCache = LoginCacheImpl(prefProvider)
 
-        dataSource = OauthRemoteDataSource(usersApi, oauthApi, oauthParams, accessTokenDao, encryptor)
+        dataSource = OauthRemoteDataSource(usersApi, oauthApi, oauthParams, accessTokenDao, encryptor, loginCache)
     }
 
     @Test
@@ -89,6 +96,9 @@ class OauthRemoteDataSourceTest {
         })
         expect(usersApi.USER.screenName, {
             orma.db.selectFromAuthorizedUserEntity().idEq(usersApi.USER_ID).value().screenName
+        })
+        expect(usersApi.USER_ID, {
+            prefProvider.defaultPrefs.userId
         })
     }
 }

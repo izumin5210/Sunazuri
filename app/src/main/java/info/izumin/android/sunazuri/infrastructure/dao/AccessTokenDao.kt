@@ -15,6 +15,10 @@ class AccessTokenDao @Inject constructor(val orma: OrmaProvider) {
         return accessTokenRelation().selector().executeAsObservable().toList()
     }
 
+    fun find(userId: Long): Observable<AccessTokenEntity> {
+        return accessTokenRelation().userEq(userId).selector().executeAsObservable()
+    }
+
     fun upsert(token: AccessTokenEntity) {
         orma.db.transactionSync {
             authorizedUserRelation().idEq(token.user.id).upserter().execute(token.user)
