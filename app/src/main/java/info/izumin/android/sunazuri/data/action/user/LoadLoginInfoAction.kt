@@ -10,14 +10,14 @@ import rx.Observable
 /**
  * Created by izumin on 5/25/2016 AD.
  */
-class LoadCurrentUserAction constructor(
+class LoadLoginInfoAction constructor(
         val repo: UsersRepository,
         val userActionCreator: UserActionCreator
-) : BaseAsyncAction<LoadCurrentUserAction.RequestValue>() {
+) : BaseAsyncAction<LoadLoginInfoAction.RequestValue>() {
 
     override fun call(dispatcher: Dispatcher): Observable<Action> {
-        return repo.currentUser.defaultIfEmpty(null)
-                .map { userActionCreator.createSetCurrentUserAction(it) }
+        return repo.loginInfo.defaultIfEmpty(null)
+                .map { userActionCreator.createSetLoginInfo(it) }
     }
 
     class RequestValue : BaseAction.RequestValue

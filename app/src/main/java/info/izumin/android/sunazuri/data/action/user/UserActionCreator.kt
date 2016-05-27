@@ -2,6 +2,7 @@ package info.izumin.android.sunazuri.data.action.user;
 
 import info.izumin.android.droidux.Action
 import info.izumin.android.sunazuri.domain.entity.AuthorizedUser
+import info.izumin.android.sunazuri.domain.entity.LoginInfo
 import info.izumin.android.sunazuri.domain.repository.OauthRepository
 import info.izumin.android.sunazuri.domain.repository.UsersRepository
 import javax.inject.Inject
@@ -19,8 +20,8 @@ class UserActionCreator @Inject constructor(
         return action
     }
 
-    fun createLoadCurrentUserAction(): Action {
-        return LoadCurrentUserAction(usersRepo, this);
+    fun createLoadLoginInfoAction(): Action {
+        return LoadLoginInfoAction(usersRepo, this);
     }
 
     fun createAuthAction(callbackUri: String): Action {
@@ -29,9 +30,9 @@ class UserActionCreator @Inject constructor(
         return action
     }
 
-    fun createSetCurrentUserAction(user: AuthorizedUser?): Action {
-        val action = SetCurrentUserAction()
-        action.value = SetCurrentUserAction.RequestValue(user)
+    fun createSetLoginInfo(loginInfo: LoginInfo?): Action {
+        val action = SetLoginInfoAction()
+        action.value = SetLoginInfoAction.RequestValue(loginInfo)
         return action
     }
 }
