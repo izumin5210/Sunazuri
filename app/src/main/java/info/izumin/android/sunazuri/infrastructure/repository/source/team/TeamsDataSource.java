@@ -2,6 +2,7 @@ package info.izumin.android.sunazuri.infrastructure.repository.source.team;
 
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity;
 import info.izumin.android.sunazuri.infrastructure.entity.TeamStatsEntity;
+import rx.Observable;
 import rx.Single;
 
 import java.util.List;
@@ -11,4 +12,5 @@ import java.util.List;
  */
 public interface TeamsDataSource {
     Single<List<TeamStatsEntity>> getTeams(AccessTokenEntity entity);
+    Observable<TeamStatsEntity> getCurrentTeam();
 }
