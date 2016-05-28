@@ -2,14 +2,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="handler" type="info.izumin.android.sunazuri.presentation.fragment.WelcomeFragment.Handler" />
+        <variable name="controller" type="info.izumin.android.sunazuri.presentation.fragment.welcome.WelcomeContract.Controller" />
     </data>
 
     <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimary"
-            tools:context="info.izumin.android.sunazuri.presentation.fragment.WelcomeFragment">
+            tools:context=".presentation.fragment.welcome.WelcomeFragment">
 
         <TextView
                 style="@style/TextAppearance.AppCompat.Display2"
@@ -42,6 +42,6 @@
                 app:layout_marginBottomPercent="12%"
                 android:textAllCaps="false"
                 android:text="@string/btn_login"
-                android:onClick="@{handler.onBtnLoginClick}" />
+                android:onClick="@{controller.onBtnLoginClick}" />
     </android.support.percent.PercentRelativeLayout>
 </layout>
