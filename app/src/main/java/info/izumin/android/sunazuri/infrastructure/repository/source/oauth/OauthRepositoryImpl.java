@@ -1,9 +1,8 @@
-package info.izumin.android.sunazuri.infrastructure.repository;
+package info.izumin.android.sunazuri.infrastructure.repository.source.oauth;
 
 import info.izumin.android.sunazuri.domain.entity.AuthorizedUser;
 import info.izumin.android.sunazuri.domain.repository.OauthRepository;
 import info.izumin.android.sunazuri.infrastructure.entity.mapper.AuthorizedUserMapper;
-import info.izumin.android.sunazuri.infrastructure.repository.source.oauth.OauthDataSourceFactory;
 import rx.Single;
 
 import javax.inject.Inject;

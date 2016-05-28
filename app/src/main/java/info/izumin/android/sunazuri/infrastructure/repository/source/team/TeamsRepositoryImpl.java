@@ -1,11 +1,10 @@
-package info.izumin.android.sunazuri.infrastructure.repository;
+package info.izumin.android.sunazuri.infrastructure.repository.source.team;
 
 import info.izumin.android.sunazuri.domain.entity.AuthorizedUser;
 import info.izumin.android.sunazuri.domain.entity.Team;
 import info.izumin.android.sunazuri.domain.repository.TeamsRepository;
 import info.izumin.android.sunazuri.infrastructure.entity.mapper.AuthorizedUserMapper;
 import info.izumin.android.sunazuri.infrastructure.entity.mapper.TeamMapper;
-import info.izumin.android.sunazuri.infrastructure.repository.source.team.TeamsDataSourceFactory;
 import rx.Single;
 
 import javax.inject.Inject;
