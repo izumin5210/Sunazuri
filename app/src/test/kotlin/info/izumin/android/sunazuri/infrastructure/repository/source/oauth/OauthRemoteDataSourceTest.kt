@@ -1,10 +1,6 @@
 package info.izumin.android.sunazuri.infrastructure.repository.source.oauth
 
-import com.github.gfx.static_gson.StaticGsonTypeAdapterFactory
-import com.google.gson.GsonBuilder
 import info.izumin.android.sunazuri.BuildConfig
-import info.izumin.android.sunazuri.infrastructure.api.OauthApi
-import info.izumin.android.sunazuri.infrastructure.api.UsersApi
 import info.izumin.android.sunazuri.infrastructure.cache.LoginCache
 import info.izumin.android.sunazuri.infrastructure.cache.LoginCacheImpl
 import info.izumin.android.sunazuri.infrastructure.dao.AccessTokenDao
@@ -23,7 +19,6 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.mock.MockRetrofit
 import rx.observers.TestSubscriber
 import kotlin.test.expect
@@ -50,18 +45,14 @@ class OauthRemoteDataSourceTest {
     val context = RuntimeEnvironment.application.applicationContext
     val encryptor = MockEncryptor(context)
 
-    val gson = GsonBuilder()
-            .registerTypeAdapterFactory(StaticGsonTypeAdapterFactory.newInstance())
-            .create()
     val retrofit = Retrofit.Builder()
             .baseUrl(oauthParams.endpoint)
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     val mockRetrofit = MockRetrofit.Builder(retrofit).build()
 
-    val usersApi = MockUsersApi(mockRetrofit.create(UsersApi::class.java))
-    val oauthApi = MockOauthApi(mockRetrofit.create(OauthApi::class.java))
+    val usersApi = MockUsersApi.getInstance(mockRetrofit)
+    val oauthApi = MockOauthApi.getInstance(mockRetrofit)
 
     lateinit var orma: OrmaProvider
     lateinit var accessTokenDao: AccessTokenDao
@@ -88,16 +79,20 @@ class OauthRemoteDataSourceTest {
 
         subscriber.awaitTerminalEvent()
         subscriber.assertNoErrors()
-        subscriber.onNextEvents[0].accessToken = oauthApi.TOKEN.accessToken
-        subscriber.onNextEvents[0].user.id = usersApi.USER_ID
 
-        expect(oauthApi.TOKEN.accessToken, {
-            encryptor.decrypt(orma.db.selectFromAccessTokenEntity().userEq(usersApi.USER_ID).value().accessToken)
+        expect(oauthApi.token.accessToken, {
+            subscriber.onNextEvents[0].accessToken
         })
-        expect(usersApi.USER.screenName, {
-            orma.db.selectFromAuthorizedUserEntity().idEq(usersApi.USER_ID).value().screenName
+        expect(usersApi.user.id, {
+            subscriber.onNextEvents[0].user.id
         })
-        expect(usersApi.USER_ID, {
+        expect(oauthApi.token.accessToken, {
+            encryptor.decrypt(orma.db.selectFromAccessTokenEntity().userEq(usersApi.user.id).value().accessToken)
+        })
+        expect(usersApi.user.screenName, {
+            orma.db.selectFromAuthorizedUserEntity().idEq(usersApi.user.id).value().screenName
+        })
+        expect(usersApi.user.id, {
             prefProvider.defaultPrefs.userId
         })
     }
