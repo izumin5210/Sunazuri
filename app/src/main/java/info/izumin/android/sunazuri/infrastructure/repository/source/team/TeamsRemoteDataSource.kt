@@ -14,6 +14,10 @@ internal class TeamsRemoteDataSource (
         val teamsApi: TeamsApi,
         val teamsDao: TeamsDao
 ) : TeamsDataSource {
+    override fun getCurrentTeam(): Observable<TeamStatsEntity>? {
+        throw UnsupportedOperationException()
+    }
+
     override fun getTeams(token: AccessTokenEntity): Single<MutableList<TeamStatsEntity>>? {
         return teamsApi.fetch(token.accessToken)
                 .toObservable()

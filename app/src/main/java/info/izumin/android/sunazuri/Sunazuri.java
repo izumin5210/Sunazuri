@@ -58,7 +58,7 @@ public class Sunazuri extends Application {
     private void initialize() {
         subscriptions = new CompositeSubscription();
         subscriptions.add(
-                store.dispatch(userActionCreator.createLoadCurrentUserAction())
+                store.dispatch(userActionCreator.createLoadLoginInfoAction())
                         .subscribeOn(Schedulers.io())
                         .subscribe()
         );

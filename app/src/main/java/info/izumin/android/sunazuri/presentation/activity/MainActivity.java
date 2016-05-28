@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeFragment(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            Fragment fragment = (store.getCurrentUser() == null) ? new WelcomeFragment() : new PostsFragment();
+            Fragment fragment = (store.getLoginInfo() == null) ? new WelcomeFragment() : new PostsFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, fragment)
                     .commit();

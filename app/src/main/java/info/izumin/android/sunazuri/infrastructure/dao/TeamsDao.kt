@@ -3,6 +3,7 @@ package info.izumin.android.sunazuri.infrastructure.dao
 import info.izumin.android.sunazuri.infrastructure.entity.AuthorizedUserEntity
 import info.izumin.android.sunazuri.infrastructure.entity.TeamEntity
 import info.izumin.android.sunazuri.infrastructure.entity.TeamStatsEntity
+import rx.Observable
 import rx.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,6 +21,10 @@ class TeamsDao @Inject constructor(val orma: OrmaProvider) {
                 }
                 .toList()
                 .toSingle()
+    }
+
+    fun findByName(name: String) : Observable<TeamStatsEntity> {
+        return teamStatsRelation().selector().teamEq(name).executeAsObservable()
     }
 
     fun updateTeamAll(teamList: Collection<TeamEntity>) {

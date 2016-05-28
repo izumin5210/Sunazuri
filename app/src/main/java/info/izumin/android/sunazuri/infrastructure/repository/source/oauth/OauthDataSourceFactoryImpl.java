@@ -46,6 +46,6 @@ class OauthDataSourceFactoryImpl implements OauthDataSourceFactory {
 
     @Override
     public OauthDataSource createRemoteDataSource() {
-        return new OauthRemoteDataSource(usersApi, oauthApi, oauthParams, accessTokenDao, encryptor, loginCache);
+        return new OauthRemoteDataSource(usersApi, oauthApi, oauthParams, accessTokenDao, encryptor);
     }
 }

@@ -4,7 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import info.izumin.android.droidux.thunk.ThunkMiddleware;
 import info.izumin.android.sunazuri.data.reducer.AuthorizedUsersReducer;
-import info.izumin.android.sunazuri.data.reducer.CurrentUserReducer;
+import info.izumin.android.sunazuri.data.reducer.LoginInfoReducer;
 import info.izumin.android.sunazuri.data.reducer.TeamsReducer;
 import info.izumin.android.sunazuri.domain.DroiduxRootStore;
 import info.izumin.android.sunazuri.domain.RootStore;
@@ -23,8 +23,8 @@ public class DataModule {
     RootStore rootStore() {
         return DroiduxRootStore.builder()
                 .setReducer(new AuthorizedUsersReducer(), new AuthorizedUsers())
-                .setReducer(new CurrentUserReducer())
                 .setReducer(new TeamsReducer(), new Teams())
+                .setReducer(new LoginInfoReducer())
                 .addMiddleware(new ThunkMiddleware())
                 .build();
     }
