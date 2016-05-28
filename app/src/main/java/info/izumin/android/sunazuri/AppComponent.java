@@ -2,7 +2,8 @@ package info.izumin.android.sunazuri;
 
 import dagger.Component;
 import info.izumin.android.sunazuri.data.DataComponent;
-import info.izumin.android.sunazuri.presentation.activity.MainActivity;
+import info.izumin.android.sunazuri.presentation.activity.main.MainComponent;
+import info.izumin.android.sunazuri.presentation.activity.main.MainModule;
 import info.izumin.android.sunazuri.presentation.activity.oauth.OauthActivity;
 
 /**
@@ -19,6 +20,7 @@ import info.izumin.android.sunazuri.presentation.activity.oauth.OauthActivity;
 )
 public interface AppComponent {
     void inject(Sunazuri sunazuri);
-    void inject(MainActivity activity);
     void inject(OauthActivity activity);
+
+    MainComponent plus(MainModule module);
 }
