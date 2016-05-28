@@ -2,7 +2,6 @@ package info.izumin.android.sunazuri.infrastructure.repository.source.oauth
 
 import info.izumin.android.sunazuri.BuildConfig
 import info.izumin.android.sunazuri.infrastructure.cache.LoginCache
-import info.izumin.android.sunazuri.infrastructure.cache.LoginCacheImpl
 import info.izumin.android.sunazuri.infrastructure.dao.AccessTokenDao
 import info.izumin.android.sunazuri.infrastructure.dao.OrmaProvider
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
@@ -67,9 +66,8 @@ class OauthRemoteDataSourceTest {
         orma = OrmaProvider(context, null)
         accessTokenDao = AccessTokenDao(orma)
         prefProvider = PrefsProvider(context)
-        loginCache = LoginCacheImpl(prefProvider)
 
-        dataSource = OauthRemoteDataSource(usersApi, oauthApi, oauthParams, accessTokenDao, encryptor, loginCache)
+        dataSource = OauthRemoteDataSource(usersApi, oauthApi, oauthParams, accessTokenDao, encryptor)
     }
 
     @Test

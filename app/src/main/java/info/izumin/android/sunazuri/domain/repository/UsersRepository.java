@@ -1,6 +1,7 @@
 package info.izumin.android.sunazuri.domain.repository;
 
 import info.izumin.android.sunazuri.domain.entity.AuthorizedUser;
+import info.izumin.android.sunazuri.domain.entity.LoginInfo;
 import rx.Observable;
 import rx.Single;
 
@@ -12,4 +13,5 @@ import java.util.List;
 public interface UsersRepository {
     Observable<AuthorizedUser> getCurrentUser();
     Single<List<AuthorizedUser>> getAuthorizedUsers();
+    Observable<LoginInfo> getLoginInfo();
 }
