@@ -5,6 +5,7 @@ import info.izumin.android.droidux.Action
 import info.izumin.android.droidux.Dispatcher
 import info.izumin.android.sunazuri.data.action.common.BaseAction
 import info.izumin.android.sunazuri.data.action.common.BaseAsyncAction
+import info.izumin.android.sunazuri.data.action.team.TeamActionCreator
 import info.izumin.android.sunazuri.domain.exception.WebApiError
 import info.izumin.android.sunazuri.domain.repository.OauthRepository
 import rx.Observable
@@ -14,7 +15,8 @@ import rx.Observable
  */
 class OauthAction constructor(
         val repo: OauthRepository,
-        val userActionCreator: UserActionCreator
+        val userActionCreator: UserActionCreator,
+        val teamActionCreator: TeamActionCreator
 ) : BaseAsyncAction<OauthAction.RequestValue>() {
 
     override fun call(dispatcher: Dispatcher): Observable<Action> {
@@ -27,7 +29,11 @@ class OauthAction constructor(
         }
         return repo.getToken(code)
                 .toObservable()
-                .map { userActionCreator.createAddAuthorizedUserAction(it) }
+                .flatMap {
+                    dispatcher.dispatch(userActionCreator.createAddAuthorizedUserAction(it))
+                            .map({ _a -> it })
+                }
+                .map { teamActionCreator.createFetchTeamsAction(it) }
     }
 
     data class RequestValue(
