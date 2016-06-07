@@ -1,7 +1,6 @@
 package info.izumin.android.sunazuri;
 
 import android.content.Context;
-import com.facebook.stetho.Stetho;
 
 /**
  * Created by izumin on 6/7/2016 AD.
