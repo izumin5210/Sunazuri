@@ -32,6 +32,6 @@ class TeamsDataSourceFactoryImpl implements TeamsDataSourceFactory {
 
     @Override
     public TeamsDataSource createRemoteDataSource() {
-        return new TeamsRemoteDataSource(teamsApi, teamsDao);
+        return new TeamsRemoteDataSource(teamsApi, teamsDao, loginCache);
     }
 }

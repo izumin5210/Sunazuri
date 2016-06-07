@@ -1,6 +1,7 @@
 package info.izumin.android.sunazuri.infrastructure.repository.source.team;
 
 import info.izumin.android.sunazuri.infrastructure.api.TeamsApi
+import info.izumin.android.sunazuri.infrastructure.cache.LoginCache
 import info.izumin.android.sunazuri.infrastructure.dao.TeamsDao
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
 import info.izumin.android.sunazuri.infrastructure.entity.TeamStatsEntity
@@ -12,7 +13,8 @@ import rx.Single
  */
 internal class TeamsRemoteDataSource (
         val teamsApi: TeamsApi,
-        val teamsDao: TeamsDao
+        val teamsDao: TeamsDao,
+        val loginCache: LoginCache
 ) : TeamsDataSource {
     override fun getCurrentTeam(): Observable<TeamStatsEntity>? {
         throw UnsupportedOperationException()
@@ -32,6 +34,11 @@ internal class TeamsRemoteDataSource (
                 }
                 .toList()
                 .doOnNext { teamsDao.updateStatsAll(it) }
+                .doOnNext {
+                    if (!loginCache.isTeamCached) {
+                        loginCache.putTeamName(it[0].team.name)
+                    }
+                }
                 .toSingle()
     }
 }
