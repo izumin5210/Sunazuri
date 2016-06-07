@@ -40,6 +40,7 @@ public class Sunazuri extends Application {
     public void onCreate() {
         super.onCreate();
         LeakCanary.install(this);
+        new StethoWrapper(this).setup();
         setupComponent();
         setupTimber();
         initialize();
