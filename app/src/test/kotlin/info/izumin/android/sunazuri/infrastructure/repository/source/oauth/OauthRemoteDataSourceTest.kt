@@ -1,14 +1,15 @@
 package info.izumin.android.sunazuri.infrastructure.repository.source.oauth
 
-import info.izumin.android.sunazuri.infrastructure.cache.LoginCache
 import info.izumin.android.sunazuri.infrastructure.dao.AccessTokenDao
 import info.izumin.android.sunazuri.infrastructure.dao.OrmaProvider
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams
 import info.izumin.android.sunazuri.infrastructure.mock.api.MockOauthApi
 import info.izumin.android.sunazuri.infrastructure.mock.api.MockUsersApi
+import info.izumin.android.sunazuri.infrastructure.mock.cache.FakeLoginCache
 import info.izumin.android.sunazuri.infrastructure.mock.util.MockEncryptor
 import info.izumin.android.sunazuri.infrastructure.pref.PrefsProvider
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,11 +50,12 @@ class OauthRemoteDataSourceTest {
     val usersApi = MockUsersApi.getInstance(mockRetrofit)
     val oauthApi = MockOauthApi.getInstance(mockRetrofit)
 
+    val loginCache = FakeLoginCache()
+
     lateinit var orma: OrmaProvider
     lateinit var accessTokenDao: AccessTokenDao
 
     lateinit var prefProvider: PrefsProvider
-    lateinit var loginCache: LoginCache
 
     lateinit var dataSource: OauthDataSource
 
@@ -63,7 +65,12 @@ class OauthRemoteDataSourceTest {
         accessTokenDao = AccessTokenDao(orma)
         prefProvider = PrefsProvider(context)
 
-        dataSource = OauthRemoteDataSource(usersApi, oauthApi, oauthParams, accessTokenDao, encryptor)
+        dataSource = OauthRemoteDataSource(usersApi, oauthApi, oauthParams, accessTokenDao, encryptor, loginCache)
+    }
+
+    @After
+    fun tearDown() {
+        loginCache.removeAll()
     }
 
     @Test
@@ -88,6 +95,9 @@ class OauthRemoteDataSourceTest {
         })
         expect(usersApi.user.id, {
             prefProvider.defaultPrefs.userId
+        })
+        expect(usersApi.user.id, {
+            loginCache.userId
         })
     }
 }

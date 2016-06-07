@@ -7,6 +7,8 @@ import info.izumin.android.sunazuri.infrastructure.entity.AuthorizedUserEntity
 import info.izumin.android.sunazuri.infrastructure.entity.TeamStatsEntity
 import info.izumin.android.sunazuri.infrastructure.mock.DataFactory
 import info.izumin.android.sunazuri.infrastructure.mock.api.MockTeamsApi
+import info.izumin.android.sunazuri.infrastructure.mock.cache.FakeLoginCache
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,6 +36,8 @@ class TeamRemoteDataSourceTest {
 
     val teamsApi = MockTeamsApi.getInstance(mockRetrofit)
 
+    val loginCache = FakeLoginCache()
+
     lateinit var orma: OrmaProvider
     lateinit var teamsDao: TeamsDao
 
@@ -47,13 +51,18 @@ class TeamRemoteDataSourceTest {
         orma = OrmaProvider(context, null)
         teamsDao = TeamsDao(orma)
 
-        dataSource = TeamsRemoteDataSource(teamsApi, teamsDao)
+        dataSource = TeamsRemoteDataSource(teamsApi, teamsDao, loginCache)
 
         user = DataFactory.createAuthorizedUserEntity()
         token = DataFactory.createAccessTokenEntity()
 
         orma.db.insertIntoAuthorizedUserEntity(user)
         orma.db.insertIntoAccessTokenEntity(token)
+    }
+
+    @After
+    fun tearDown() {
+        loginCache.removeAll()
     }
 
     @Test
@@ -82,6 +91,9 @@ class TeamRemoteDataSourceTest {
         })
         expect(teamsApi.team.name, {
             orma.db.selectFromTeamEntity().userEq(user).value().name
+        })
+        expect(teamsApi.team.name, {
+            loginCache.teamId
         })
     }
 }

@@ -34,6 +34,8 @@ class OauthAction constructor(
                             .map({ _a -> it })
                 }
                 .map { teamActionCreator.createFetchTeamsAction(it) }
+                .flatMap { dispatcher.dispatch(it) }
+                .map { userActionCreator.createLoadLoginInfoAction() }
     }
 
     data class RequestValue(
