@@ -8,6 +8,7 @@ import info.izumin.android.sunazuri.infrastructure.api.ApiModule;
 import info.izumin.android.sunazuri.infrastructure.cache.CacheModule;
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
 import info.izumin.android.sunazuri.infrastructure.repository.RepositoryModule;
+import okhttp3.OkHttpClient;
 
 import javax.inject.Singleton;
 
@@ -30,4 +31,7 @@ public interface InfrastructureComponent {
     UsersRepository usersRepository();
 
     OauthParams oauthParams();
+
+    // for Picasso
+    OkHttpClient okHttpClient();
 }
