@@ -2,6 +2,7 @@ package info.izumin.android.sunazuri;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.VisibleForTesting;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.picasso.Picasso;
 import info.izumin.android.sunazuri.data.DaggerDataComponent;
@@ -43,10 +44,10 @@ public class Sunazuri extends Application {
     public void onCreate() {
         super.onCreate();
         LeakCanary.install(this);
-        new StethoWrapper(this).setup();
+        setupStetho();
         setupComponent();
         setupTimber();
-        Picasso.setSingletonInstance(picasso);
+        setupPicasso();
         initialize();
     }
 
@@ -81,6 +82,16 @@ public class Sunazuri extends Application {
                 .dataComponent(getDataComponent())
                 .build();
         component.inject(this);
+    }
+
+    @VisibleForTesting
+    protected void setupStetho() {
+        new StethoWrapper(this).setup();
+    }
+
+    @VisibleForTesting
+    protected void setupPicasso() {
+        Picasso.setSingletonInstance(picasso);
     }
 
     private DataComponent getDataComponent() {
