@@ -1,12 +1,12 @@
 package info.izumin.android.sunazuri.infrastructure;
 
 import dagger.Component;
-import info.izumin.android.sunazuri.domain.repository.UsersRepository;
-import info.izumin.android.sunazuri.infrastructure.cache.CacheModule;
-import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
 import info.izumin.android.sunazuri.domain.repository.OauthRepository;
 import info.izumin.android.sunazuri.domain.repository.TeamsRepository;
+import info.izumin.android.sunazuri.domain.repository.UsersRepository;
 import info.izumin.android.sunazuri.infrastructure.api.ApiModule;
+import info.izumin.android.sunazuri.infrastructure.cache.CacheModule;
+import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
 import info.izumin.android.sunazuri.infrastructure.repository.RepositoryModule;
 
 import javax.inject.Singleton;
@@ -19,6 +19,7 @@ import javax.inject.Singleton;
         modules = {
                 InfrastructureModule.class,
                 RepositoryModule.class,
+                HttpClientModule.class,
                 ApiModule.class,
                 CacheModule.class
         }

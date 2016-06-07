@@ -7,7 +7,6 @@ import dagger.Module;
 import dagger.Provides;
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -30,22 +29,6 @@ public class ApiModule {
         this.apiEndpoint = apiEndpoint;
         this.oauthParams = oauthParams;
         this.responseEnvelopKeys = responseEnvelopKeys;
-    }
-
-    @Provides
-    @Singleton
-    OkHttpClient httpClient(HttpLoggingInterceptor loggingInterceptor) {
-        return new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .build();
-    }
-
-    @Provides
-    @Singleton
-    HttpLoggingInterceptor loggingInterceptor() {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        return interceptor;
     }
 
     @Provides
