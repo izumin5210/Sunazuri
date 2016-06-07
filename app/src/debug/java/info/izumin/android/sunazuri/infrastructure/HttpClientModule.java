@@ -19,7 +19,7 @@ public class HttpClientModule {
     @Singleton
     OkHttpClient httpClient(HttpLoggingInterceptor loggingInterceptor) {
         return new OkHttpClient.Builder()
-                .addInterceptor(new StethoInterceptor())
+                .addNetworkInterceptor(new StethoInterceptor())
                 .addInterceptor(loggingInterceptor)
                 .build();
     }

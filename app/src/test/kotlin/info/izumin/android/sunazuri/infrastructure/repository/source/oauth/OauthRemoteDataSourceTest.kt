@@ -1,6 +1,5 @@
 package info.izumin.android.sunazuri.infrastructure.repository.source.oauth
 
-import info.izumin.android.sunazuri.BuildConfig
 import info.izumin.android.sunazuri.infrastructure.cache.LoginCache
 import info.izumin.android.sunazuri.infrastructure.dao.AccessTokenDao
 import info.izumin.android.sunazuri.infrastructure.dao.OrmaProvider
@@ -15,7 +14,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricGradleTestRunner
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.annotation.Config
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.mock.MockRetrofit
@@ -25,9 +23,7 @@ import kotlin.test.expect
 /**
  * Created by izumin on 5/21/2016 AD.
  */
-
 @RunWith(RobolectricGradleTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = intArrayOf(21))
 class OauthRemoteDataSourceTest {
 
     val oauthParams = OauthParams(

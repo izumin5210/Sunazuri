@@ -1,10 +1,8 @@
 package info.izumin.android.sunazuri.infrastructure;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 
 import javax.inject.Singleton;
 
