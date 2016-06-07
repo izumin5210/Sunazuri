@@ -3,6 +3,7 @@ package info.izumin.android.sunazuri;
 import android.app.Application;
 import android.content.Context;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.picasso.Picasso;
 import info.izumin.android.sunazuri.data.DaggerDataComponent;
 import info.izumin.android.sunazuri.data.DataComponent;
 import info.izumin.android.sunazuri.data.action.user.UserActionCreator;
@@ -33,6 +34,8 @@ public class Sunazuri extends Application {
     @Inject RootStore store;
     @Inject UserActionCreator userActionCreator;
 
+    @Inject Picasso picasso;
+
     private AppComponent component;
     private CompositeSubscription subscriptions;
 
@@ -40,8 +43,10 @@ public class Sunazuri extends Application {
     public void onCreate() {
         super.onCreate();
         LeakCanary.install(this);
+        new StethoWrapper(this).setup();
         setupComponent();
         setupTimber();
+        Picasso.setSingletonInstance(picasso);
         initialize();
     }
 
@@ -72,6 +77,7 @@ public class Sunazuri extends Application {
 
     private void setupComponent() {
         component = DaggerAppComponent.builder()
+                .appModule(createAppModule())
                 .dataComponent(getDataComponent())
                 .build();
         component.inject(this);
@@ -88,6 +94,10 @@ public class Sunazuri extends Application {
                 .infrastructureModule(new InfrastructureModule(this, BuildConfig.KEYSTORE_ALIAS))
                 .apiModule(new ApiModule(BuildConfig.ESA_API_ENDPOINT, getOauthParams(), getResponseEnvelopeKeys()))
                 .build();
+    }
+
+    private AppModule createAppModule() {
+        return new AppModule(this);
     }
 
     private OauthParams getOauthParams() {

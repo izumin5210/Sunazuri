@@ -7,6 +7,7 @@ import info.izumin.android.sunazuri.data.action.user.UserActionCreator;
 import info.izumin.android.sunazuri.domain.RootStore;
 import info.izumin.android.sunazuri.infrastructure.InfrastructureComponent;
 import info.izumin.android.sunazuri.infrastructure.entity.OauthParams;
+import okhttp3.OkHttpClient;
 
 /**
  * Created by izumin on 5/13/2016 AD.
@@ -27,4 +28,7 @@ public interface DataComponent {
 
     UserActionCreator userActionCreator();
     TeamActionCreator teamActionCreator();
+
+    // for Picasso
+    OkHttpClient okHttpClient();
 }
