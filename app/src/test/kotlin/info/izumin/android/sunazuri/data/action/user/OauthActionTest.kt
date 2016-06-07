@@ -9,6 +9,7 @@ import info.izumin.android.sunazuri.data.reducer.LoginInfoReducer
 import info.izumin.android.sunazuri.data.reducer.TeamsReducer
 import info.izumin.android.sunazuri.domain.DroiduxRootStore
 import info.izumin.android.sunazuri.domain.RootStore
+import info.izumin.android.sunazuri.domain.entity.LoginInfo
 import info.izumin.android.sunazuri.domain.model.AuthorizedUsers
 import info.izumin.android.sunazuri.domain.model.Teams
 import info.izumin.android.sunazuri.domain.repository.OauthRepository
@@ -19,6 +20,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.robolectric.RobolectricGradleTestRunner
+import rx.Observable
 import rx.Single
 import rx.observers.TestSubscriber
 import kotlin.test.expect
@@ -63,6 +65,7 @@ class OauthActionTest {
     fun testName() {
         Mockito.stub(oauthRepo.getToken(Mockito.anyString())).toReturn(Single.just(USER))
         Mockito.stub(teamsRepo.get(Mockito.any())).toReturn(Single.just(listOf(TEAM)))
+        Mockito.stub(usersRepo.loginInfo).toReturn(Observable.just(LoginInfo(USER, TEAM)))
 
         val callbackUri = "sunazuri://esa.example.com?code=52652c14c863181c40b231283b7ccac6"
         val subscriber = TestSubscriber<Action>()
@@ -74,5 +77,7 @@ class OauthActionTest {
 
         expect(TEAM_NAME, { store.teams[0].name })
         expect(USER_ID, { store.authorizedUsers[0].id })
+        expect(TEAM_NAME, { store.loginInfo.team.name })
+        expect(USER_ID, { store.loginInfo.user.id })
     }
 }
