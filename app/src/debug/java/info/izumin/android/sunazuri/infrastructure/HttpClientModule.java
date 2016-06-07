@@ -19,8 +19,8 @@ public class HttpClientModule {
     @Singleton
     OkHttpClient httpClient(HttpLoggingInterceptor loggingInterceptor) {
         return new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
                 .addInterceptor(new StethoInterceptor())
+                .addInterceptor(loggingInterceptor)
                 .build();
     }
 
