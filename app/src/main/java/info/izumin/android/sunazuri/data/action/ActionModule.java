@@ -16,8 +16,10 @@ public class ActionModule {
     public static final String TAG = ActionModule.class.getSimpleName();
 
     @Provides
-    UserActionCreator userActionCreator(OauthRepository oauthRepo, UsersRepository usersRepo) {
-        return new UserActionCreator(oauthRepo, usersRepo);
+    UserActionCreator userActionCreator(OauthRepository oauthRepo,
+                                        UsersRepository usersRepo,
+                                        TeamActionCreator teamActionCreator) {
+        return new UserActionCreator(oauthRepo, usersRepo, teamActionCreator);
     }
 
     @Provides

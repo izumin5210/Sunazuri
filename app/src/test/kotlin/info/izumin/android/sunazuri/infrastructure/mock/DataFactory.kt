@@ -54,9 +54,10 @@ object DataFactory {
             teamName: String = DEFAULT_TEAM_NAME
     ): TeamStatsEntity {
         val stats = TeamStatsEntity()
-        stats.members  = 20
-        stats.posts    = 1959
-        stats.comments = 2695
+        stats.members   = 20
+        stats.posts     = 1959
+        stats.comments  = 2695
+        stats.stars     = 3245
         stats.dailyActiveUsers     = 8
         stats.weeklyActiveUsers    = 14
         stats.monthlyActiveUsers   = 13
