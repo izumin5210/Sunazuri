@@ -1,6 +1,5 @@
 package info.izumin.android.sunazuri.infrastructure.repository.source.team
 
-import info.izumin.android.sunazuri.BuildConfig
 import info.izumin.android.sunazuri.infrastructure.dao.OrmaProvider
 import info.izumin.android.sunazuri.infrastructure.dao.TeamsDao
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
@@ -13,7 +12,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricGradleTestRunner
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.annotation.Config
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.mock.MockRetrofit
@@ -24,7 +22,6 @@ import kotlin.test.expect
  * Created by izumin on 5/22/2016 AD.
  */
 @RunWith(RobolectricGradleTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = intArrayOf(21))
 class TeamRemoteDataSourceTest {
 
     val context = RuntimeEnvironment.application.applicationContext

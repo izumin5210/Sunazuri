@@ -1,6 +1,5 @@
 package info.izumin.android.sunazuri.infrastructure.repository
 
-import info.izumin.android.sunazuri.BuildConfig
 import info.izumin.android.sunazuri.domain.entity.LoginInfo
 import info.izumin.android.sunazuri.domain.repository.UsersRepository
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
@@ -17,7 +16,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.robolectric.RobolectricGradleTestRunner
-import org.robolectric.annotation.Config
 import rx.Observable
 import rx.observers.TestSubscriber
 import kotlin.test.expect
@@ -26,7 +24,6 @@ import kotlin.test.expect
  * Created by izumin on 5/26/2016 AD.
  */
 @RunWith(RobolectricGradleTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = intArrayOf(21))
 class UsersRepositoryImplTest {
 
     lateinit var oauthLocalDataSource: OauthDataSource

@@ -1,6 +1,5 @@
 package info.izumin.android.sunazuri.infrastructure.dao
 
-import info.izumin.android.sunazuri.BuildConfig
 import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
 import info.izumin.android.sunazuri.infrastructure.mock.DataFactory
 import org.junit.Before
@@ -8,14 +7,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricGradleTestRunner
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.annotation.Config
 import kotlin.test.expect
 
 /**
  * Created by izumin on 5/21/2016 AD.
  */
 @RunWith(RobolectricGradleTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = intArrayOf(21))
 class AccessTokenDaoTest {
 
     val context = RuntimeEnvironment.application.applicationContext

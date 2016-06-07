@@ -2,7 +2,6 @@ package info.izumin.android.sunazuri.data.action.user
 
 import info.izumin.android.droidux.Action
 import info.izumin.android.droidux.thunk.ThunkMiddleware
-import info.izumin.android.sunazuri.BuildConfig
 import info.izumin.android.sunazuri.data.action.team.TeamActionCreator
 import info.izumin.android.sunazuri.data.mock.DataFactory
 import info.izumin.android.sunazuri.data.reducer.AuthorizedUsersReducer
@@ -20,7 +19,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.robolectric.RobolectricGradleTestRunner
-import org.robolectric.annotation.Config
 import rx.Single
 import rx.observers.TestSubscriber
 import kotlin.test.expect
@@ -29,7 +27,6 @@ import kotlin.test.expect
  * Created by izumin on 5/29/2016 AD.
  */
 @RunWith(RobolectricGradleTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = intArrayOf(21))
 class OauthActionTest {
 
     lateinit var oauthRepo: OauthRepository
