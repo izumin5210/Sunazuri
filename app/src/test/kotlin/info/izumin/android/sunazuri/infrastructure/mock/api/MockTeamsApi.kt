@@ -6,13 +6,13 @@ import info.izumin.android.sunazuri.infrastructure.entity.TeamStatsEntity
 import info.izumin.android.sunazuri.infrastructure.mock.DataFactory
 import retrofit2.mock.BehaviorDelegate
 import retrofit2.mock.MockRetrofit
+import rx.Observable
 import rx.Single
 
 /**
  * Created by izumin on 5/21/2016 AD.
  */
 class MockTeamsApi(val delegate: BehaviorDelegate<TeamsApi>) : TeamsApi {
-
     companion object {
         fun getInstance(mockRetrofit: MockRetrofit): MockTeamsApi {
             return MockTeamsApi(mockRetrofit.create(TeamsApi::class.java))
@@ -38,5 +38,10 @@ class MockTeamsApi(val delegate: BehaviorDelegate<TeamsApi>) : TeamsApi {
 
     override fun stats(teamName: String?, accessToken: String?): Single<TeamStatsEntity>? {
         return delegate.returningResponse(stats).stats(teamName, accessToken)
+    }
+
+    override fun categories(teamName: String?, accessToken: String?): Observable<TeamsApi.Category>? {
+        // TODO: Not yet implemented.
+        throw UnsupportedOperationException()
     }
 }
