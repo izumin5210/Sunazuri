@@ -1,10 +1,7 @@
 package info.izumin.android.sunazuri.infrastructure.mock
 
 import info.izumin.android.sunazuri.infrastructure.api.TeamsApi
-import info.izumin.android.sunazuri.infrastructure.entity.AccessTokenEntity
-import info.izumin.android.sunazuri.infrastructure.entity.AuthorizedUserEntity
-import info.izumin.android.sunazuri.infrastructure.entity.TeamEntity
-import info.izumin.android.sunazuri.infrastructure.entity.TeamStatsEntity
+import info.izumin.android.sunazuri.infrastructure.entity.*
 import java.util.*
 
 /**
@@ -91,5 +88,18 @@ object DataFactory {
         category0000.children = listOf(category0100)
 
         return listOf(category0000, category1000)
+    }
+
+    fun createCategoryEntity(
+            id: Long = 1,
+            path: String = "DailyReport/2016/02/10",
+            team: TeamEntity = createTeamEntity()
+    ): CategoryEntity {
+        val entity = CategoryEntity()
+        entity.id = id
+        entity.path = path
+        entity.count = 10
+        entity.team = team
+        return entity;
     }
 }
